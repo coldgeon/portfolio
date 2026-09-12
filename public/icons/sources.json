@@ -1,0 +1,78 @@
+{
+  "deviconCommit": "7330accdbc47e2dc0c19789a48533c4a3c50fe58",
+  "lighthouseCommit": "7d21d0b9037b0e940931587ffe691087b1e15d70",
+  "assets": [
+    {
+      "name": "react",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/react/react-original.svg"
+    },
+    {
+      "name": "typescript",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/typescript/typescript-original.svg"
+    },
+    {
+      "name": "nextjs",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/nextjs/nextjs-original.svg"
+    },
+    {
+      "name": "vitejs",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/vitejs/vitejs-original.svg"
+    },
+    {
+      "name": "styledcomponents",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/styledcomponents/styledcomponents-original.svg"
+    },
+    {
+      "name": "java",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/java/java-original.svg"
+    },
+    {
+      "name": "spring",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/spring/spring-original.svg"
+    },
+    {
+      "name": "mysql",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/mysql/mysql-original.svg"
+    },
+    {
+      "name": "python",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/python/python-original.svg"
+    },
+    {
+      "name": "fastapi",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/fastapi/fastapi-original.svg"
+    },
+    {
+      "name": "postgresql",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/postgresql/postgresql-original.svg"
+    },
+    {
+      "name": "docker",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/docker/docker-original.svg"
+    },
+    {
+      "name": "cloudrun",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/cloudrun/cloudrun-original.svg"
+    },
+    {
+      "name": "nginx",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/nginx/nginx-original.svg"
+    },
+    {
+      "name": "git",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/git/git-original.svg"
+    },
+    {
+      "name": "github",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/github/github-original.svg"
+    },
+    {
+      "name": "notion",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/notion/notion-original.svg"
+    },
+    {
+      "name": "lighthouse",
+      "url": "https://raw.githubusercontent.com/GoogleChrome/lighthouse/7d21d0b9037b0e940931587ffe691087b1e15d70/assets/lighthouse-logo.svg"
+    }
+  ]
+}
