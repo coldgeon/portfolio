@@ -95,7 +95,7 @@ test('all detail pages, metadata, assets and 404',async({page,request})=>{
    const og=await page.locator('meta[property="og:image"]').getAttribute('content');
    expect(og).toContain(`/projects/${slug}/opengraph-image`);
    expect((await request.get(new URL(og!).pathname)).status()).toBe(200);
-   expect(await page.locator('img').evaluateAll(imgs=>imgs.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth>0))).toBe(true);
+   await expect.poll(()=>page.locator('img').evaluateAll(imgs=>imgs.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth>0))).toBe(true);
  }
  const draftResponse=await page.goto('/projects/ai-org-simulation');
  expect(draftResponse?.status()).toBe(404);
