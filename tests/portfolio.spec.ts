@@ -59,7 +59,7 @@ test('theme, credentials and email copy',async({page,context})=>{
  await expect(page.getByRole('heading',{name:'SQLD · SQL 개발자'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'SAP 클래식 ABAP 기초 개발자 과정',exact:true})).toHaveCount(0);
  await page.getByRole('button',{name:'이메일 주소 복사',exact:true}).click();
- await expect(page.getByRole('status')).toHaveText('이메일 주소를 복사했습니다.');
+ await expect(page.locator('#contact').getByRole('status')).toHaveText('이메일 주소를 복사했습니다.');
  expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe('cksrjs4726@gmail.com');
 });
 
@@ -176,6 +176,6 @@ test('email copy failure is announced without hiding the address',async({page})=
  await page.addInitScript(()=>Object.defineProperty(navigator,'clipboard',{value:{writeText:()=>Promise.reject(new Error('Clipboard unavailable'))}}));
  await page.goto('/');
  await page.getByRole('button',{name:'이메일 주소 복사',exact:true}).click();
- await expect(page.getByRole('status')).toContainText('복사하지 못했습니다.');
+ await expect(page.locator('#contact').getByRole('status')).toContainText('복사하지 못했습니다.');
  await expect(page.getByRole('link',{name:'Email cksrjs4726@gmail.com'})).toHaveAttribute('href','mailto:cksrjs4726@gmail.com');
 });

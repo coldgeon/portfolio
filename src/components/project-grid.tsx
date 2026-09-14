@@ -14,7 +14,7 @@ export function ProjectGrid(){
   const visible=projects.filter(p=>filter==='전체'||p.tags.includes(filter as Strength));
   return <>
     <div className="project-toolbar"><div className="filter-group" role="group" aria-label="프로젝트 강점 필터">{filters.map(f=><button key={f} aria-pressed={filter===f} onClick={()=>setFilter(f)}>{f}</button>)}</div><span className="result-count" aria-live="polite">{String(visible.length).padStart(2,'0')} projects</span></div>
-    <div className="project-grid"><AnimatePresence initial={false} mode="popLayout">{visible.map(p=>{const isDraft=p.availability==='draft';return <motion.article className={`project-card ${isDraft?'project-card--draft':''}`} data-project={p.slug} key={p.slug} layout={!reduced} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:reduced?0:.2}}>
+    <div className="project-grid"><AnimatePresence initial={false} mode="popLayout">{visible.map(p=>{const isDraft=p.availability==='draft';return <motion.article className={`project-card scroll-reveal ${isDraft?'project-card--draft':''}`} data-project={p.slug} key={p.slug} layout={!reduced} initial={{opacity:0}} animate={{opacity:1,y:0}} whileInView={reduced?undefined:{opacity:[0.2,1],y:[20,0],transition:{duration:.6,ease:[0.22,1,0.36,1]}}} viewport={{once:false,amount:'some',margin:'0px 0px -32px 0px'}} exit={{opacity:0}} transition={{duration:reduced?0:.2}}>
       {isDraft?<div className="project-art project-art--draft" style={{background:p.accent}} aria-hidden="true">
         <Image src={p.cover} alt={`${p.name} 프로젝트 개요`} width={800} height={700} sizes="(max-width: 640px) 100vw, 340px"/>
         <span className="art-index">0{projects.indexOf(p)+1}</span>

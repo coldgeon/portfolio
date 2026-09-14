@@ -28,4 +28,13 @@
 
 ## 개발 메모
 
+### 2026-09-14 이미지와 스터디 운영 기록
+
+- [AlarmIT 경험 기록](https://app.notion.com/p/3d8d45b9a2d681839358efdf8ad8f579)의 `알림it 앱 사진` 5장과 [Replendar 경험 기록](https://app.notion.com/p/3d8d45b9a2d681d7babcf30e7e02d632)의 `Project overview` 7장을 원문 순서대로 상세 카루셀에 반영. 서비스 전체 소개 이미지이며 개인 구현 범위는 기존 기여 항목으로 설명.
+- [도란도란](https://app.notion.com/p/3d8d45b9a2d681ae83bddab6c158d5a7)의 메인·커리큘럼·개인 페이지·개념 발표·문제 목록·풀이 코드 6장과 운영 설명을 반영.
+- [19문파](https://app.notion.com/p/3d8d45b9a2d6811bbd19f27c8cbb75a9)의 과목 분류·주차별 DB·강의 정리·예상 문제 4장과 공동 학습 과정을 반영. 스터디 구성원의 공동 학습 자료와 본인의 운영 역할을 구분해 설명.
+- 원본 워크스페이스 접근을 확인할 수 없어 공개 화면에는 해당 링크를 추가하지 않음. 로컬 이미지와 캡션으로 활동 과정을 열람 가능.
+- 다운로드한 이미지 사본은 `public/images/projects` 및 `public/images/experiences`에 보관. 만료되는 Notion 서명 URL은 공개 데이터에 포함하지 않음.
+- Nextify는 PDF 뷰어 유지, AI Org Simulation은 정리 중·404 유지. LINC 내용과 미확인 수상·성과 수치는 이번 변경에 포함하지 않음.
+
 공개용 기록은 src/lib/content.ts와 MDX 파일에서 관리합니다. 원본 노션 전체를 동기화하거나 재게시하지 않습니다. 미확정 기록을 소개 문구로 채우지 않습니다.

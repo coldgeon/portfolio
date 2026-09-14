@@ -7,6 +7,7 @@ import {ProjectLink} from '@/components/project-link';
 import {Credentials} from '@/components/credentials';
 import {Contact} from '@/components/contact';
 import {Evidence} from '@/components/evidence';
+import {ImageCarousel} from '@/components/image-carousel';
 import {AwardGradeBadge,AwardMedal} from '@/components/award-grade';
 import type {Metadata} from 'next';
 export const metadata:Metadata={alternates:{canonical:'/'}};
@@ -47,7 +48,7 @@ export default function HomePage(){return <>
    </section>
   </Reveal></div>
  </section>
- <section id="projects" className="home-section"><div className="content-width"><SectionHeading label="Selected projects" index="02" description="직접 고민하고, 만들고, 검증한 경험들."/><ProjectGrid/></div></section>
+ <section id="projects" className="home-section"><div className="content-width"><Reveal><SectionHeading label="Selected projects" index="02" description="직접 고민하고, 만들고, 검증한 경험들."/></Reveal><ProjectGrid/></div></section>
  <section id="skills" className="home-section"><div className="content-width"><Reveal>
   <SectionHeading label="Technical skills" index="03" description="개발에 활용하는 기술과 그 맥락."/>
   <div className="skills-grid">{skillGroups.map((group,i)=>{
@@ -61,7 +62,7 @@ export default function HomePage(){return <>
   })}</div>
   <p className="section-footnote"><ArrowUpRight size={13}/>표시가 있는 기술은 사용한 프로젝트로 연결됩니다.</p>
  </Reveal></div></section>
- <section id="experience" className="home-section"><div className="content-width"><Reveal><SectionHeading label="Experience" index="04" description="프로젝트 밖에서도, 문제를 해결하는 방식."/><div className="timeline">{experiences.map(e=><article className="timeline-row" key={e.id}><div className="timeline-year">{e.year?<time>{e.year}</time>:<span>Work</span>}<span className="timeline-dot"/></div><div className="timeline-content"><p className="eyebrow">{e.type}</p><h3>{e.name}</h3><p>{e.summary}</p><ul>{e.actions.map(a=><li key={a}>{a}</li>)}</ul></div></article>)}</div></Reveal></div></section>
+ <section id="experience" className="home-section"><div className="content-width"><Reveal><SectionHeading label="Experience" index="04" description="프로젝트 밖에서도, 문제를 해결하는 방식."/><div className="timeline">{experiences.map(e=><article className="timeline-row" key={e.id}><div className="timeline-year">{e.year?<time>{e.year}</time>:<span>Work</span>}<span className="timeline-dot"/></div><div className="timeline-content"><p className="eyebrow">{e.type}</p><h3>{e.name}</h3><p>{e.summary}</p><ul>{e.actions.map(a=><li key={a}>{a}</li>)}</ul>{e.takeaway&&<p className="experience-takeaway">{e.takeaway}</p>}{e.gallery&&<ImageCarousel images={e.gallery} title={`${e.name} 활동 기록`} compact/>}</div></article>)}</div></Reveal></div></section>
  <section id="credentials" className="home-section"><div className="content-width"><Reveal><SectionHeading label="Credentials" index="05" description="학습을 쌓고, 역량을 확인한 기록."/><Credentials/></Reveal></div></section>
  <section id="awards" className="home-section"><div className="content-width"><Reveal><SectionHeading label="Awards" index="06" description="함께 만든 결과, 그리고 인정받은 순간."/><div className="awards-list">{awards.map(a=><article className="award-row" key={a.id}><div className="record-icon"><AwardMedal grade={a.grade}/></div><div className="record-info"><div className="award-name"><h3>{a.name}</h3><AwardGradeBadge grade={a.grade}/></div><p>{a.issuer}</p>{a.projectSlug&&<ProjectLink className="text-link" href={`/projects/${a.projectSlug}`}>{projects.find(project=>project.slug===a.projectSlug)?.name ?? '프로젝트'} 프로젝트 <ArrowUpRight size={13}/></ProjectLink>}{a.evidence&&<Evidence item={a.evidence}/>}</div><time>{a.date}</time></article>)}</div></Reveal></div></section>
  <section id="contact" className="home-section contact-section"><div className="content-width"><Reveal><SectionHeading label="Let's connect" index="07"/><Contact/></Reveal></div></section>
