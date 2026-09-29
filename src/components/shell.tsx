@@ -70,7 +70,7 @@ export function Shell({children,modal}:{children:React.ReactNode;modal:React.Rea
           <Dialog.Root open={mobileOpen} onOpenChange={setMobileOpen}><Dialog.Trigger asChild><button className="icon-button mobile-menu-button" aria-label="메뉴 열기"><Menu size={20}/></button></Dialog.Trigger><Dialog.Portal><Dialog.Overlay className="mobile-overlay"/><Dialog.Content className="mobile-sidebar" aria-describedby={undefined}><Dialog.Title className="sr-only">사이트 내비게이션</Dialog.Title><Dialog.Close className="icon-button mobile-close" aria-label="메뉴 닫기"><X size={18}/></Dialog.Close>{navContent(true)}</Dialog.Content></Dialog.Portal></Dialog.Root>
           <Folder size={15}/><Link href="/#hero">Portfolio</Link><ChevronRight size={12}/><span className="breadcrumb-current">{currentProject?.name||navigation.find(n=>n.id===active)?.label||'Home'}</span>
         </div>
-        <span className="topbar-identity">박찬건 <span> / </span> Web Developer</span>
+        <span className="topbar-identity">{profile.name} <span> / </span> {profile.role}</span>
       </header>
       <main id="main-content" tabIndex={-1}>{children}</main>
       <footer className="site-footer"><span>© {new Date().getFullYear()} Park Changeon</span><span>Thoughtfully built, continuously learning.</span></footer>

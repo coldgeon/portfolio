@@ -32,6 +32,7 @@ test('project galleries preserve source order and support keyboard, zoom and nes
 
   await page.goto('/projects/replendar');
   const replendar = page.getByRole('region',{name:'Replendar 프로젝트 이미지'});
+  await replendar.scrollIntoViewIfNeeded();
   for (let i=1;i<=7;i++) {
     await expect(replendar.getByRole('status')).toContainText(`${i} / 7`);
     await expect.poll(()=>replendar.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
@@ -78,6 +79,7 @@ test('study records and mobile galleries are readable, swipeable and accessible 
   await page.keyboard.press('Escape');
   await page.goto('/projects/alarm-u');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.locator('.image-carousel').scrollIntoViewIfNeeded();
   await expect.poll(()=>page.locator('.image-carousel img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
   await page.screenshot({path:'test-results/project-gallery-mobile.png',fullPage:true});
 });

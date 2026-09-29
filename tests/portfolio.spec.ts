@@ -86,7 +86,7 @@ test('mobile drawer, fullscreen modal and sidebar collapse',async({page})=>{
 });
 
 test('all detail pages, metadata, assets and 404',async({page,request})=>{
- for(const [slug,name] of [['nextify','Nextify'],['alarm-u','AlarmIT'],['replendar','Replendar']]){
+ for(const [slug,name] of [['nextify','Nextify'],['alarm-u','AlarmIT'],['replendar','Replendar'],['linc-automation','LINC 업무 자동화']]){
    const response=await page.goto(`/projects/${slug}`);
    expect(response?.status()).toBe(200);
    await expect(page).toHaveTitle(`${name} | 박찬건`);
@@ -95,7 +95,11 @@ test('all detail pages, metadata, assets and 404',async({page,request})=>{
    const og=await page.locator('meta[property="og:image"]').getAttribute('content');
    expect(og).toContain(`/projects/${slug}/opengraph-image`);
    expect((await request.get(new URL(og!).pathname)).status()).toBe(200);
-   await expect.poll(()=>page.locator('img').evaluateAll(imgs=>imgs.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth>0))).toBe(true);
+   await page.screenshot({path:`test-results/${slug}-overview.png`});
+   for(const img of await page.locator('img:visible').all()) {
+     await img.scrollIntoViewIfNeeded();
+     await expect.poll(()=>img.evaluate((image:HTMLImageElement)=>image.complete&&image.naturalWidth>0)).toBe(true);
+   }
  }
  const draftResponse=await page.goto('/projects/ai-org-simulation');
  expect(draftResponse?.status()).toBe(404);

@@ -5,6 +5,7 @@ export type Project = {
   slug: string; name: string; eyebrow: string; subtitle: string; summary: string;
   role: string; period?: string; team?: string; tags: Strength[]; technologies: string[];
   availability?: 'published' | 'draft';
+  highlights?: {value: string; label: string; detail: string}[]; cardResult?: string;
   cover: string; coverWide: string; accent: string; contributions: string[]; outcome: string;
   flow: { title: string; detail: string }[]; github?: string; awardIds: string[];
   evidence: Evidence[]; gallery?: GalleryImage[]; presentation?: { title: string; src: string; preview: string; pages: number };
@@ -15,13 +16,13 @@ export type Award = { id: string; name: string; grade: string; issuer: string; d
 export type Education = { id: string; institution: string; program: string; kind: 'university' | 'community'; period?: string };
 
 export const profile = {
-  name: '박찬건', handle: 'coldgeon', role: 'Web Developer',
+  name: '박찬건', handle: 'coldgeon', role: 'Software Developer',
   github: 'https://github.com/coldgeon',
   email: 'cksrjs4726@gmail.com',
   phone: '010-3327-4726',
   phoneHref: '+821033274726',
   portrait: '/images/park-changeon.jpg',
-  description: '문제를 발견하고, 함께 해결할 구조를 만드는 개발자 박찬건입니다.',
+  description: '업무의 흐름을 이해하고, 자동화와 검증으로 개선을 만드는 개발자 박찬건입니다. LINC 업무 자동화, Nextify 전환·검증, AlarmIT 관리자 인증·배포 경험을 소개합니다.',
 };
 
 export const education: Education[] = [
@@ -34,12 +35,14 @@ export const education: Education[] = [
 export const projects: Project[] = [
   {
     slug: 'nextify', name: 'Nextify', eyebrow: 'CAPSTONE · TEAM LEAD',
-    subtitle: '복잡한 마이그레이션을 검증 가능한 자동화 과정으로 바꾸다.',
-    summary: 'React 프로젝트를 Next.js로 전환하는 반복 작업을 5단계 파이프라인으로 구조화했습니다. 팀장으로 방향 전환과 전체 흐름을 설계하고, 타입체크 검증기와 성능 비교 보고서를 개발했습니다.',
+    subtitle: 'AI가 바꾼 코드, 검증할 수 있는 전환 과정으로.',
+    summary: '연쇄적으로 발생하는 React → Next.js 전환 작업을 5단계로 구조화했습니다. 규칙·AST 분석·제약형 AI·사용자 판단을 작업 특성에 맞게 결합하고, 팀장으로 전체 흐름을 설계하고, 변환 결과 검증기와 성능 보고서를 구현했습니다.',
+    cardResult: '최종 평가 · 지원 범위 내 30개 프로젝트 모두 빌드 성공',
+    highlights: [{value:'30 / 30',label:'최종 평가 빌드 성공',detail:'지원 범위 내 오픈소스 30개 대상 · 팀 결과'},{value:'2 → 18 / 20',label:'프로토타입 빌드 성공',detail:'20개 대상 평가 · 최종 30개 평가와 별도'},{value:'5단계',label:'내가 설계한 전환 흐름',detail:'검증기와 성능 비교 보고서 개발'}],
     role: '팀장 · 전체 흐름 설계 · 검증기 개발', period: '2025 — 2026', team: '4명 → 3명',
     tags: ['구조 설계', '검증·운영', '협업·주도'], technologies: ['React', 'Next.js', 'Node.js', 'ts-morph', 'Gemini API', 'Lighthouse'],
     cover: '/images/projects/nextify/selected-projects-cover.png', coverWide: '/images/nextify-wide.svg', accent: '#e4eae6',
-    contributions: ['Next.js 실행 구조를 기준으로 5단계·86개 세부 작업의 전환 흐름 설계', '규칙 기반 자동화·프롬프트 제약형 AI·사용자 개입을 결합한 처리 구조 설계', '타입체크를 단계별로 실행해 오류를 선제 처리하는 검증기 개발', '동일 환경에서 3회 측정한 중앙값으로 FCP·LCP·SEO를 비교하는 보고서 개발', '팀 축소 이후 주제를 전환하고 팀의 목표와 역할 조율'],
+    contributions: ['Next.js 실행 구조를 기준으로 5단계·86개 세부 작업의 전환 흐름 설계', '규칙 기반 자동화·AST 분석·제약형 AI·사용자 판단을 결합한 처리 구조 설계', '타입체크·빌드 오류 검증과 자동 보정, 오류 증가 시 롤백 흐름 구현', '동일 환경에서 3회 측정한 중앙값으로 FCP·LCP·SEO를 비교하는 보고서 개발', '팀 축소 이후 주제를 전환하고 팀의 목표와 역할 조율'],
     outcome: '지원 범위 내 오픈소스 30개 평가에서 30개 모두 빌드에 성공했고, 평균 FCP 38.3%·LCP 18.7%·SEO 7.6% 개선과 마이그레이션 시간 78.4% 단축을 기록했습니다. CLI는 npm에, Review Extension은 VS Code Marketplace에 배포했습니다.',
     flow: [{title:'프로젝트 분석',detail:'환경·지원 범위 확인'},{title:'5단계 전환',detail:'규칙·제약형 AI'},{title:'검증기',detail:'타입체크·오류 처리'},{title:'보고·리뷰',detail:'성능·Diff 확인'}],
     awardIds: ['capstone-2026','wave-2026'], presentation: {title:'Nextify 발표 자료',src:'/presentations/nextify-final-presentation.pdf',preview:'/images/projects/nextify/presentation-cover.png',pages:16}, evidence: [
@@ -51,23 +54,13 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'ai-org-simulation', name: 'AI Org Simulation', eyebrow: 'AI AGENT · BACKEND & INFRA',
-    subtitle: '프로젝트 기록을 정리하고 있습니다.',
-    summary: '역할과 구현 내용을 검토해 포트폴리오용 프로젝트 기록으로 정리 중입니다.',
-    role: '정리 중', availability: 'draft',
-    tags: ['구조 설계', '검증·운영'], technologies: ['Python', 'FastAPI', 'Vertex AI', 'Cloud Run', 'Docker'],
-    cover: '/images/ai-org-simulation.svg', coverWide: '/images/ai-org-simulation-wide.svg', accent: '#e5e8f0',
-    contributions: ['FastAPI 세션 API와 PDF 텍스트 추출 파이프라인 연결', 'Requirements·Shadow Roleplay Agent 실행 환경 구성', '프론트엔드·백엔드 Cloud Run 배포와 권한·로그 설정', '메모리 초과와 장시간 스트림 요청을 분석하고 실행 설정 조정'],
-    outcome: 'PDF 입력부터 보고서까지 이어지는 데모와 클라우드 실행 환경을 구성했습니다.',
-    flow: [{title:'PDF 기획서',detail:'텍스트 추출'},{title:'요구사항 분석',detail:'Vertex AI'},{title:'팀 매칭·시뮬레이션',detail:'역할별 협업'},{title:'리포트',detail:'결과 정리'}],
-    awardIds: [], evidence: [],
-  },
-  {
-    slug: 'alarm-u', name: 'AlarmIT', eyebrow: 'MAINTENANCE · BACKEND',
-    subtitle: '기존 서비스의 취약점을 발견하고 운영 구조를 다듬다.',
-    summary: '이미 운영 중인 알림 서비스를 유지보수하며, 노출될 수 있던 device_id와 FCM token에 RSA·AES 하이브리드 암호화를 적용했습니다. 관리자 페이지를 구현하고, 온프레미스·Nginx 환경에 맞춰 프론트엔드 빌드를 백엔드 배포 흐름에 통합했습니다.',
-    role: '백엔드 유지보수 · 관리자 페이지',
-    tags: ['검증·운영'], technologies: ['RSA · AES', 'FCM', 'Nginx', 'On-premise'],
+    slug: 'alarm-u', name: 'AlarmIT', eyebrow: 'AUTHENTICATION · OPERATIONS',
+    subtitle: '익숙한 로그인 방식을, 운영 서비스의 기준으로 다시 설계하다.',
+    summary: '운영 중인 알림 서비스의 관리자 기능을 맡아 토큰의 보관·갱신 흐름을 설계했습니다. 액세스 토큰은 메모리, 리프레시 토큰은 HttpOnly 쿠키로 관리하고 RTR을 적용했습니다. Vite 화면을 Spring Boot API와 연동하고 기존 배포 흐름에 통합했습니다.',
+    cardResult: '메모리 + HttpOnly 쿠키 · 새로고침 후 인증 복원 · RTR',
+    highlights: [{value:'Memory',label:'액세스 토큰 보관',detail:'로컬스토리지에 남기지 않는 구조'},{value:'HttpOnly + RTR',label:'리프레시 토큰 관리',detail:'쿠키 보관 · 갱신 시 토큰 교체'},{value:'통합 배포',label:'기존 운영 환경에 연결',detail:'Vite · Spring Boot · Nginx'}],
+    role: '관리자 인증 · API 연동 · 배포',
+    tags: ['구조 설계', '검증·운영'], technologies: ['Vite', 'JavaScript', 'Spring Boot', 'HttpOnly · RTR', 'Nginx'],
     cover: '/images/projects/alarm-it/overview.png', coverWide: '/images/projects/alarm-it/overview.png', accent: '#eef8f6',
     gallery: [
       {src:'/images/projects/alarm-it/gallery-1.jpg',title:'알림it · 서비스 소개',alt:'울산대학교 공지 알림 서비스 알림it의 앱 소개와 주요 화면'},
@@ -76,9 +69,21 @@ export const projects: Project[] = [
       {src:'/images/projects/alarm-it/gallery-4.png',title:'관심 공지 모아보기',alt:'원하는 공지를 북마크하는 알림it 화면'},
       {src:'/images/projects/alarm-it/gallery-5.png',title:'학부별 공지 확인',alt:'학부별 공지 목록과 카테고리를 보여주는 알림it 화면'},
     ],
-    contributions: ['로그인 기능 부재로 노출될 수 있던 device_id·FCM token에 RSA·AES 하이브리드 암호화 적용', '관리자 페이지의 화면과 백엔드 연동 구현', '온프레미스·Nginx 환경을 분석해 프론트엔드 빌드를 백엔드 배포 흐름에 통합', '기존 서비스 구조를 파악한 뒤 보안·관리 기능의 변경 범위 정리'],
-    outcome: '기존 서비스 유지보수에서 보안 취약점 대응, 관리자 기능, 배포 구조를 함께 다루며 기능 구현 이후의 운영 관점까지 확장했습니다.',
-    flow: [{title:'기존 구조 파악',detail:'서비스·배포 흐름 확인'},{title:'노출 데이터 식별',detail:'device_id · FCM token'},{title:'보호·관리 기능',detail:'암호화 · 관리자 페이지'},{title:'통합 배포',detail:'Nginx · On-premise'}],
+    contributions: ['액세스 토큰 메모리 보관·리프레시 토큰 HttpOnly 쿠키 기반 인증 흐름 구현', '새로고침 후 액세스 토큰 재발급과 리프레시 토큰 교체(RTR) 적용', 'Vite·JavaScript 관리자 화면과 기존 Spring Boot API 연동', '프론트엔드 빌드 결과물을 백엔드에 통합해 온프레미스·Nginx 환경에 배포', '기존 알림 식별자(device_id·FCM token)에 RSA·AES 하이브리드 암호화 적용'],
+    outcome: '액세스 토큰을 로컬스토리지에 남기지 않으면서 새로고침 후 인증 상태를 복원하는 관리자 인증 흐름을 구현했습니다. 관리자 화면은 기존 Spring Boot API와 연결하고, 프론트엔드 빌드 결과물은 백엔드 배포 흐름에 통합했습니다.',
+    flow: [{title:'로그인·발급',detail:'기존 Spring Boot API'},{title:'토큰 보관',detail:'메모리 · HttpOnly 쿠키'},{title:'새로고침·갱신',detail:'액세스 토큰 재발급 · RTR'},{title:'서비스 제공',detail:'백엔드 통합 · Nginx'}],
+    awardIds: [], evidence: [],
+  },
+  {
+    slug: 'linc-automation', name: 'LINC 업무 자동화', eyebrow: 'WORK EXPERIENCE · AUTOMATION',
+    subtitle: '두 Excel 파일을 대조해, 비어 있는 기업명을 채우다.',
+    summary: '수백 개 기업이 포함된 두 Excel 파일을 대조해 기업명이 비어 있는 파일에 이름을 채우는 업무를 맡았습니다. 반복해서 찾고 입력하는 작업을 Python으로 자동화하고, 실행 후 입력 결과를 직접 확인해 업무 시간을 줄였습니다.',
+    role: '기업명 입력 자동화 · 결과 확인', tags: ['구조 설계', '검증·운영'], technologies: ['Python', 'pandas', 'NumPy', 'Excel'],
+    cardResult: '기업명 찾기·입력 자동화 → 실행 결과 직접 확인 → 업무 시간 단축',
+    cover: '/images/linc-automation.svg', coverWide: '/images/linc-automation.svg', accent: '#edf2f5',
+    contributions: ['사업자등록번호·주소·담당자 정보 등이 있는 두 Excel 파일의 대조 업무 파악', '두 파일을 대조해 해당 기업명을 채우는 Python 자동화 프로그램 구현', '프로그램 실행 후 기업명이 올바르게 입력됐는지 직접 확인'],
+    outcome: '프로그램을 실행한 뒤 기업명이 올바르게 입력됐는지 직접 확인했습니다. 확인 과정에서 데이터가 정상적으로 들어간 것을 확인했고, 수작업으로 찾고 입력하던 업무에 드는 시간을 줄였습니다.',
+    flow: [{title:'두 파일 확인',detail:'기업 정보 · 기업명 빈칸'},{title:'정보 대조',detail:'해당 기업 찾기'},{title:'기업명 입력',detail:'Python으로 자동화'},{title:'직접 검증',detail:'입력 결과 확인'}],
     awardIds: [], evidence: [],
   },
   {
@@ -106,6 +111,18 @@ export const projects: Project[] = [
       {title:'테마 변경 화면 보기',src:'/images/projects/replendar/theme-variants.png',kind:'image',alt:'초록색·파란색·보라색 배경 테마를 적용한 Replendar 화면 비교'},
     ],
   },
+  {
+    slug: 'ai-org-simulation', name: 'AI Org Simulation', eyebrow: 'AI AGENT · BACKEND & INFRA',
+    subtitle: '프로젝트 기록을 정리하고 있습니다.',
+    summary: '역할과 구현 내용을 검토해 포트폴리오용 프로젝트 기록으로 정리 중입니다.',
+    role: '정리 중', availability: 'draft',
+    tags: ['구조 설계', '검증·운영'], technologies: ['Python', 'FastAPI', 'Vertex AI', 'Cloud Run', 'Docker'],
+    cover: '/images/ai-org-simulation.svg', coverWide: '/images/ai-org-simulation-wide.svg', accent: '#e5e8f0',
+    contributions: ['FastAPI 세션 API와 PDF 텍스트 추출 파이프라인 연결', 'Requirements·Shadow Roleplay Agent 실행 환경 구성', '프론트엔드·백엔드 Cloud Run 배포와 권한·로그 설정', '메모리 초과와 장시간 스트림 요청을 분석하고 실행 설정 조정'],
+    outcome: 'PDF 입력부터 보고서까지 이어지는 데모와 클라우드 실행 환경을 구성했습니다.',
+    flow: [{title:'PDF 기획서',detail:'텍스트 추출'},{title:'요구사항 분석',detail:'Vertex AI'},{title:'팀 매칭·시뮬레이션',detail:'역할별 협업'},{title:'리포트',detail:'결과 정리'}],
+    awardIds: [], evidence: [],
+  },
 ];
 
 export const experiences: Experience[] = [
@@ -129,7 +146,6 @@ export const experiences: Experience[] = [
       {src:'/images/experiences/19munpa/gallery-3.png',title:'정리한 사람이 직접 설명하기',alt:'Application Layer 강의 내용을 정리한 19문파 노션 학습 문서',description:'주말이나 일과 후 빈 강의실에 모여 노션 문서를 띄우고, 정리한 사람이 해당 주차 내용을 설명했습니다.'},
       {src:'/images/experiences/19munpa/gallery-4.png',title:'예상 문제 풀이와 자유로운 설명',alt:'시험 전 핵심 내용을 바탕으로 작성한 컴퓨터네트워크 예상 문제 문서',description:'시험 약 2주 전 핵심 내용을 점검하고 생성형 AI로 예상 문제를 구성했습니다. 함께 푼 뒤 먼저 해결한 사람이 자유롭게 설명했습니다.'},
     ]},
-  {id:'linc',name:'LINC 사업단 · 업무 자동화',type:'WORK · AUTOMATION',summary:'반복되는 Excel 기업 명단 비교 업무를 Python으로 개선했습니다.',actions:['자료 비교 기준을 파악하고 pandas·NumPy로 자동화','처리 결과를 검증하고 누락을 확인하는 업무 흐름 개선']},
 ];
 
 export const credentials: Credential[] = [
@@ -144,12 +160,11 @@ export const awards: Award[] = [
   {id:'wave-2026',name:'WAVE 2026 AI/SW 아이디어 피칭대회',grade:'최우수상',issuer:'울산세계미래산업박람회 · WAVE 2026 공동주관',date:'2026.09.11',projectSlug:'nextify'},
   {id:'capstone-2026',name:'2026 울산대학교 캡스톤디자인 경진대회',grade:'대상',issuer:'울산대학교 SW중심대학사업단',date:'2026.07.14',projectSlug:'nextify',evidence:{title:'캡스톤 대상 상장 보기',src:'/evidence/capstone-2026.jpg',kind:'image',alt:'2026년 7월 14일 울산대학교 SW중심대학사업단이 수여한 캡스톤디자인 경진대회 대상 상장. 팀 17조, 박찬건 외 팀원 2명.'}},
   {id:'umc-7-best-member',name:'UMC 7기 베스트 파트원상',grade:'베스트 파트원',issuer:'University MakeUs Challenge · UMC 7기',date:'2025.02.21',projectSlug:'replendar',evidence:{title:'UMC 7기 베스트 파트원 상장 보기',src:'/evidence/umc-7-best-member.jpg',kind:'image',alt:'University MakeUs Challenge UMC 7기 베스트 파트원상. 울산대학교 소속 박찬건의 Web 파트 활동을 인정한 상장으로, 활동 기간은 2024년 9월 16일부터 12월 27일까지이며 발급일은 2025년 2월 21일.'}},
-  {id:'ctl-2024',name:'CTL 학습공모전',grade:'동상',issuer:'교내 CTL · 디지털 학습도구 활용 사례',date:'2024'},
 ];
 
 export const skillGroups: {name:string;icon:string;items:{name:string;icon:string;project?:string}[]}[] = [
-  {name:'Frontend',icon:'frontend',items:[{name:'React',icon:'react',project:'replendar'},{name:'TypeScript',icon:'typescript',project:'replendar'},{name:'Next.js',icon:'nextjs',project:'nextify'},{name:'Vite',icon:'vitejs'},{name:'styled-components',icon:'styledcomponents'}]},
-  {name:'Backend & Data',icon:'database',items:[{name:'Java',icon:'java'},{name:'Spring Boot',icon:'spring'},{name:'MySQL',icon:'mysql'},{name:'JPA',icon:'jpa'},{name:'Python',icon:'python'},{name:'FastAPI',icon:'fastapi'},{name:'PostgreSQL',icon:'postgresql'}]},
+  {name:'Frontend',icon:'frontend',items:[{name:'React',icon:'react',project:'replendar'},{name:'TypeScript',icon:'typescript',project:'replendar'},{name:'Next.js',icon:'nextjs',project:'nextify'},{name:'Vite',icon:'vitejs',project:'alarm-u'},{name:'styled-components',icon:'styledcomponents'}]},
+  {name:'Backend & Data',icon:'database',items:[{name:'Java',icon:'java'},{name:'Spring Boot',icon:'spring',project:'alarm-u'},{name:'MySQL',icon:'mysql'},{name:'JPA',icon:'jpa'},{name:'Python',icon:'python',project:'linc-automation'},{name:'FastAPI',icon:'fastapi'},{name:'PostgreSQL',icon:'postgresql'}]},
   {name:'Cloud & Deployment',icon:'cloud',items:[{name:'Docker',icon:'docker'},{name:'Cloud Run',icon:'cloudrun'},{name:'Nginx',icon:'nginx',project:'alarm-u'}]},
   {name:'Collaboration & Quality',icon:'tools',items:[{name:'Git',icon:'git',project:'replendar'},{name:'GitHub',icon:'github',project:'replendar'},{name:'Notion',icon:'notion',project:'replendar'},{name:'Lighthouse',icon:'lighthouse',project:'nextify'}]},
 ];

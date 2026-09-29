@@ -28,6 +28,7 @@ export function ProjectGrid(){
         <div className="project-title-row"><h3>{p.name}</h3>{p.awardIds.length>0&&<span className="award-inline">{p.awardIds.map(id=>{const award=awards.find(a=>a.id===id);return award?<AwardGradeBadge key={id} grade={award.grade}/>:null;})}</span>}</div>
         <p className="project-subtitle">{p.subtitle}</p>
         <p className="project-summary">{p.summary}</p>
+        {p.cardResult&&<p className="project-result"><span>핵심 결과</span>{p.cardResult}</p>}
         <div className="tech-tags">{p.technologies.map(t=><span key={t}>{t}</span>)}</div>
         <div className="project-card-bottom"><span>{p.role.split(' · ').slice(0,2).join(' · ')}</span>{isDraft?<span className="detail-link detail-link--disabled" aria-disabled="true">정리 중</span>:<ProjectLink href={`/projects/${p.slug}`} className="detail-link"><span><span className="sr-only">{p.name} </span>상세 보기</span><ArrowRight size={16}/></ProjectLink>}</div>
       </div>
