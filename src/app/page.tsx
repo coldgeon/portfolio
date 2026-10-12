@@ -16,12 +16,12 @@ function SectionHeading({label,index,description}:{label:string;index:string;des
 const strengths=[
  {icon:Layers,title:'반복 업무에서 개선할 지점을 찾습니다.',label:'UNDERSTAND',text:'두 Excel 파일을 대조해 누락된 기업명을 채우는 업무를 Python으로 자동화했습니다. 실행 후 입력 결과를 직접 확인하며 반복 작업에 드는 시간을 줄였습니다.',project:'linc-automation'},
  {icon:ScanLine,title:'자동화의 결과까지 검증합니다.',label:'VERIFY',text:'Nextify의 전환 흐름을 5단계로 설계하고 검증기와 성능 보고서를 개발했습니다. AI가 맡을 작업과 결과를 확인할 방법을 함께 정했습니다.',project:'nextify'},
- {icon:UsersRound,title:'운영 환경에 맞춰 연결합니다.',label:'CONNECT',text:'AlarmIT 관리자 인증에서 토큰 보관·갱신 방식을 재검토했습니다. 화면과 API를 연결하고 기존 온프레미스 배포 흐름에 통합했습니다.',project:'alarm-u'},
+ {icon:UsersRound,title:'운영 환경에 맞춰 연결합니다.',label:'CONNECT',text:'알림 it 관리자 인증에서 토큰 보관·갱신 방식을 재검토했습니다. 화면과 API를 연결하고 기존 온프레미스 배포 흐름에 통합했습니다.',project:'alarm-u'},
 ];
 const selectedEvidence=[
  {slug:'linc-automation',label:'업무 이해',name:'LINC 업무 자동화',detail:'Excel 기업명 입력 자동화'},
  {slug:'nextify',label:'자동화 · 검증',name:'Nextify',detail:'최종 평가 30 / 30 빌드 성공'},
- {slug:'alarm-u',label:'인증 · 운영',name:'AlarmIT',detail:'토큰 보관부터 갱신·배포까지'},
+ {slug:'alarm-u',label:'인증 · 운영',name:'알림 it',detail:'토큰 보관부터 갱신·배포까지'},
 ];
 export default function HomePage(){return <>
  <section id="hero" className="hero"><div className="hero-inner">
@@ -67,7 +67,7 @@ export default function HomePage(){return <>
    return <div className="skill-group" key={group.name}><h3><Icon size={18}/>{group.name}</h3><div className="skill-items">{group.items.map(item=>{
     const label=<><span className="skill-logo" aria-hidden="true"><Image src={`/icons/${item.icon}.svg`} alt="" width={20} height={20}/></span><span className="skill-name">{item.name}</span></>;
     return item.project
-     ? <ProjectLink key={item.name} href={`/projects/${item.project}`} aria-label={`${item.name} 사용 사례: ${item.project}`} className="skill-item">{label}<ArrowUpRight size={13}/></ProjectLink>
+     ? <ProjectLink key={item.name} href={`/projects/${item.project}`} aria-label={`${item.name} 사용 사례: ${projects.find(project=>project.slug===item.project)?.name ?? item.project}`} className="skill-item">{label}<ArrowUpRight size={13}/></ProjectLink>
      : <div key={item.name} className="skill-item">{label}</div>;
    })}</div></div>;
   })}</div>

@@ -3,7 +3,7 @@ await mkdir('public/images',{recursive:true});
 const covers=[
  {slug:'nextify',name:'Nextify',subtitle:'A better way to migrate.',bg:'#e4eae6',ink:'#485c50',labels:['React','Transform','Validate','Next.js'],tag:'MIGRATE. VERIFY. IMPROVE.'},
  {slug:'ai-org-simulation',name:'AI Org',subtitle:'From a brief to a team.',bg:'#e5e8f0',ink:'#505c78',labels:['PRD','Analyze','Simulate','Report'],tag:'SIMULATING COLLABORATION'},
- {slug:'alarm-u',name:'AlarmU',subtitle:'Care beyond the feature.',bg:'#eee8de',ink:'#806b4d',labels:['Admin','API','Protect','Deliver'],tag:'MAINTAIN. PROTECT. OPERATE.'},
+ {slug:'alarm-u',name:'알림 it',subtitle:'Care beyond the feature.',bg:'#eee8de',ink:'#806b4d',labels:['Admin','API','Protect','Deliver'],tag:'MAINTAIN. PROTECT. OPERATE.'},
  {slug:'replendar',name:'Replendar',subtitle:'Connecting the workflow.',bg:'#ece5eb',ink:'#7b6378',labels:['Design','React','API','Connect'],tag:'BUILDING TOGETHER'}
 ];
 for(const c of covers){

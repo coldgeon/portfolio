@@ -2,7 +2,7 @@
   <rect width="800" height="700" fill="#e6edf8"/>
   <path d="M88 110H712M88 592H712" stroke="#315d9c" stroke-opacity=".18"/>
   <text x="88" y="155" font-family="Arial,sans-serif" font-size="12" letter-spacing="2.3" fill="#315d9c">MAINTAIN · PROTECT · OPERATE</text>
-  <text x="84" y="239" font-family="Arial,sans-serif" font-size="72" letter-spacing="-3" font-weight="700" fill="#173d73">AlarmIT</text>
+  <text x="84" y="239" font-family="Arial,sans-serif" font-size="72" letter-spacing="-3" font-weight="700" fill="#173d73">알림 it</text>
   <text x="88" y="279" font-family="Arial,sans-serif" font-size="19" fill="#315d9c">Notification service maintenance</text>
   <g fill="#fff" fill-opacity=".62" stroke="#315d9c" stroke-opacity=".2">
     <rect x="88" y="356" width="275" height="80" rx="10"/>

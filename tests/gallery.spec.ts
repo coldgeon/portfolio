@@ -4,9 +4,9 @@ import AxeBuilder from '@axe-core/playwright';
 test('project galleries preserve source order and support keyboard, zoom and nested modal dismissal', async ({page}) => {
   await page.emulateMedia({reducedMotion:'reduce'});
   await page.goto('/');
-  await page.getByRole('link',{name:'AlarmIT 상세 보기',exact:true}).click();
-  const project = page.getByRole('dialog',{name:'AlarmIT',exact:true});
-  const gallery = project.getByRole('region',{name:'AlarmIT 프로젝트 이미지'});
+  await page.getByRole('link',{name:'알림 it 상세 보기',exact:true}).click();
+  const project = page.getByRole('dialog',{name:'알림 it',exact:true});
+  const gallery = project.getByRole('region',{name:'알림 it 프로젝트 이미지'});
   await expect(gallery.getByRole('status')).toContainText('1 / 5');
   await gallery.getByRole('button',{name:'다음 이미지',exact:true}).click();
   await expect(gallery.getByRole('status')).toContainText('2 / 5');
@@ -14,9 +14,9 @@ test('project galleries preserve source order and support keyboard, zoom and nes
   await expect(gallery.getByRole('status')).toContainText('5 / 5');
   await page.keyboard.press('ArrowRight');
   await expect(gallery.getByRole('status')).toContainText('1 / 5');
-  const trigger = gallery.getByRole('button',{name:'알림it · 서비스 소개 확대 보기'});
+  const trigger = gallery.getByRole('button',{name:'알림 it · 서비스 소개 확대 보기'});
   await trigger.click();
-  const zoom = page.getByRole('dialog',{name:'AlarmIT 프로젝트 이미지',exact:true});
+  const zoom = page.getByRole('dialog',{name:'알림 it 프로젝트 이미지',exact:true});
   await expect(zoom).toBeVisible();
   await zoom.getByRole('button',{name:'다음 이미지',exact:true}).click();
   await expect(zoom.getByRole('status')).toContainText('2 / 5');
@@ -28,7 +28,7 @@ test('project galleries preserve source order and support keyboard, zoom and nes
   await expect(gallery.getByRole('button',{name:'중요한 공지 알림 확대 보기'})).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(project).toHaveCount(0);
-  await expect(page.getByRole('link',{name:'AlarmIT 상세 보기',exact:true})).toBeFocused();
+  await expect(page.getByRole('link',{name:'알림 it 상세 보기',exact:true})).toBeFocused();
 
   await page.goto('/projects/replendar');
   const replendar = page.getByRole('region',{name:'Replendar 프로젝트 이미지'});

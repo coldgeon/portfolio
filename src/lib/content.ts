@@ -22,7 +22,7 @@ export const profile = {
   phone: '010-3327-4726',
   phoneHref: '+821033274726',
   portrait: '/images/park-changeon.jpg',
-  description: '업무의 흐름을 이해하고, 자동화와 검증으로 개선을 만드는 개발자 박찬건입니다. LINC 업무 자동화, Nextify 전환·검증, AlarmIT 관리자 인증·배포 경험을 소개합니다.',
+  description: '업무의 흐름을 이해하고, 자동화와 검증으로 개선을 만드는 개발자 박찬건입니다. LINC 업무 자동화, Nextify 전환·검증, 알림 it 관리자 인증·배포 경험을 소개합니다.',
 };
 
 export const education: Education[] = [
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'alarm-u', name: 'AlarmIT', eyebrow: 'AUTHENTICATION · OPERATIONS',
+    slug: 'alarm-u', name: '알림 it', eyebrow: 'AUTHENTICATION · OPERATIONS',
     subtitle: '익숙한 로그인 방식을, 운영 서비스의 기준으로 다시 설계하다.',
     summary: '운영 중인 알림 서비스의 관리자 기능을 맡아 토큰의 보관·갱신 흐름을 설계했습니다. 액세스 토큰은 메모리, 리프레시 토큰은 HttpOnly 쿠키로 관리하고 RTR을 적용했습니다. Vite 화면을 Spring Boot API와 연동하고 기존 배포 흐름에 통합했습니다.',
     cardResult: '메모리 + HttpOnly 쿠키 · 새로고침 후 인증 복원 · RTR',
@@ -63,11 +63,11 @@ export const projects: Project[] = [
     tags: ['구조 설계', '검증·운영'], technologies: ['Vite', 'JavaScript', 'Spring Boot', 'HttpOnly · RTR', 'Nginx'],
     cover: '/images/projects/alarm-it/overview.png', coverWide: '/images/projects/alarm-it/overview.png', accent: '#eef8f6',
     gallery: [
-      {src:'/images/projects/alarm-it/gallery-1.jpg',title:'알림it · 서비스 소개',alt:'울산대학교 공지 알림 서비스 알림it의 앱 소개와 주요 화면'},
-      {src:'/images/projects/alarm-it/gallery-2.png',title:'중요한 공지 알림',alt:'중요한 공지를 푸시 알림으로 확인하는 알림it 화면'},
-      {src:'/images/projects/alarm-it/gallery-3.png',title:'공지 검색',alt:'검색어를 입력해 원하는 공지를 찾는 알림it 화면'},
-      {src:'/images/projects/alarm-it/gallery-4.png',title:'관심 공지 모아보기',alt:'원하는 공지를 북마크하는 알림it 화면'},
-      {src:'/images/projects/alarm-it/gallery-5.png',title:'학부별 공지 확인',alt:'학부별 공지 목록과 카테고리를 보여주는 알림it 화면'},
+      {src:'/images/projects/alarm-it/gallery-1.jpg',title:'알림 it · 서비스 소개',alt:'울산대학교 공지 알림 서비스 알림 it의 앱 소개와 주요 화면'},
+      {src:'/images/projects/alarm-it/gallery-2.png',title:'중요한 공지 알림',alt:'중요한 공지를 푸시 알림으로 확인하는 알림 it 화면'},
+      {src:'/images/projects/alarm-it/gallery-3.png',title:'공지 검색',alt:'검색어를 입력해 원하는 공지를 찾는 알림 it 화면'},
+      {src:'/images/projects/alarm-it/gallery-4.png',title:'관심 공지 모아보기',alt:'원하는 공지를 북마크하는 알림 it 화면'},
+      {src:'/images/projects/alarm-it/gallery-5.png',title:'학부별 공지 확인',alt:'학부별 공지 목록과 카테고리를 보여주는 알림 it 화면'},
     ],
     contributions: ['액세스 토큰 메모리 보관·리프레시 토큰 HttpOnly 쿠키 기반 인증 흐름 구현', '새로고침 후 액세스 토큰 재발급과 리프레시 토큰 교체(RTR) 적용', 'Vite·JavaScript 관리자 화면과 기존 Spring Boot API 연동', '프론트엔드 빌드 결과물을 백엔드에 통합해 온프레미스·Nginx 환경에 배포', '기존 알림 식별자(device_id·FCM token)에 RSA·AES 하이브리드 암호화 적용'],
     outcome: '액세스 토큰을 로컬스토리지에 남기지 않으면서 새로고침 후 인증 상태를 복원하는 관리자 인증 흐름을 구현했습니다. 관리자 화면은 기존 Spring Boot API와 연결하고, 프론트엔드 빌드 결과물은 백엔드 배포 흐름에 통합했습니다.',

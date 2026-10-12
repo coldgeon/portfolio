@@ -7,10 +7,10 @@ import {AwardGradeBadge} from './award-grade';
 import type {MDXComponents} from 'mdx/types';
 import Nextify from '@/content/nextify.mdx';
 import AiOrg from '@/content/ai-org-simulation.mdx';
-import AlarmIT from '@/content/alarm-u.mdx';
+import AlrimIt from '@/content/alarm-u.mdx';
 import Replendar from '@/content/replendar.mdx';
 import Linc from '@/content/linc-automation.mdx';
-const bodies:Record<string,React.ComponentType<{components:MDXComponents}>>={nextify:Nextify,'ai-org-simulation':AiOrg,'alarm-u':AlarmIT,replendar:Replendar,'linc-automation':Linc};
+const bodies:Record<string,React.ComponentType<{components:MDXComponents}>>={nextify:Nextify,'ai-org-simulation':AiOrg,'alarm-u':AlrimIt,replendar:Replendar,'linc-automation':Linc};
 export function ProjectDocument({project:p}:{project:Project}) {
  const Body=bodies[p.slug];
  return <article className="project-document"><header className="document-header"><p className="eyebrow">{p.eyebrow}</p><h1>{p.name}</h1><p className="document-subtitle">{p.subtitle}</p><div className="document-meta">{p.period&&<span><CalendarDays size={15}/>{p.period}</span>}{p.team&&<span><UsersRound size={15}/>{p.team}</span>}<span><UserRound size={15}/>{p.role}</span></div><div className="document-links">{p.github&&<a className="text-link" href={p.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14}/></a>}{awards.filter(a=>p.awardIds.includes(a.id)).map(a=><span className="document-award" key={a.id}><AwardGradeBadge grade={a.grade}/><span>{a.name}</span></span>)}</div></header>

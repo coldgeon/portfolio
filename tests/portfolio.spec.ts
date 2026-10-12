@@ -86,7 +86,7 @@ test('mobile drawer, fullscreen modal and sidebar collapse',async({page})=>{
 });
 
 test('all detail pages, metadata, assets and 404',async({page,request})=>{
- for(const [slug,name] of [['nextify','Nextify'],['alarm-u','AlarmIT'],['replendar','Replendar'],['linc-automation','LINC 업무 자동화']]){
+ for(const [slug,name] of [['nextify','Nextify'],['alarm-u','알림 it'],['replendar','Replendar'],['linc-automation','LINC 업무 자동화']]){
    const response=await page.goto(`/projects/${slug}`);
    expect(response?.status()).toBe(200);
    await expect(page).toHaveTitle(`${name} | 박찬건`);
