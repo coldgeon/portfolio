@@ -7,7 +7,7 @@ test('project filtering, modal history, scroll and focus restoration',async({pag
  await expect(page.locator('[data-project="ai-org-simulation"] .project-draft-mask')).toContainText('정리 중');
  await expect(page.locator('[data-project="ai-org-simulation"]').getByRole('link')).toHaveCount(0);
  await page.getByRole('button',{name:'협업·주도',exact:true}).click();
- await expect(page.locator('.project-card')).toHaveCount(2);
+ await expect(page.locator('.project-card')).toHaveCount(3);
  const trigger=page.getByRole('link',{name:'Nextify 상세 보기',exact:true});
  await trigger.focus();
  const scroll=await page.evaluate(()=>window.scrollY);
@@ -86,7 +86,7 @@ test('mobile drawer, fullscreen modal and sidebar collapse',async({page})=>{
 });
 
 test('all detail pages, metadata, assets and 404',async({page,request})=>{
- for(const [slug,name] of [['nextify','Nextify'],['alarm-u','알림 it'],['replendar','Replendar'],['linc-automation','LINC 업무 자동화']]){
+ for(const [slug,name] of [['nextify','Nextify'],['one-action','ONE ACTION'],['alarm-u','알림 it'],['replendar','Replendar'],['linc-automation','LINC 업무 자동화']]){
    const response=await page.goto(`/projects/${slug}`);
    expect(response?.status()).toBe(200);
    await expect(page).toHaveTitle(`${name} | 박찬건`);
@@ -127,6 +127,7 @@ test('responsive layouts and reduced motion',async({page})=>{
 });
 
 test('accessibility: light, dark, mobile menu and project dialog',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'}); // Reveal timing is verified separately in scroll-reveal.spec.ts.
  await page.goto('/');
  let results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
  expect(results.violations).toEqual([]);
@@ -166,7 +167,7 @@ test('keyboard navigation through drawer, project, accordion and back',async({pa
  const dialog=page.getByRole('dialog',{name:'Nextify',exact:true});
  await expect(dialog).toBeVisible();
  const firstCase=dialog.locator('.case-trigger').first();
- for(let i=0;i<8&&!await firstCase.evaluate(el=>el===document.activeElement);i++)await page.keyboard.press('Tab');
+ for(let i=0;i<12&&!await firstCase.evaluate(el=>el===document.activeElement);i++)await page.keyboard.press('Tab');
  await expect(firstCase).toBeFocused();
  await expect(firstCase).toHaveAttribute('aria-expanded','true');
  await page.keyboard.press('Space');
@@ -182,4 +183,40 @@ test('email copy failure is announced without hiding the address',async({page})=
  await page.getByRole('button',{name:'이메일 주소 복사',exact:true}).click();
  await expect(page.locator('#contact').getByRole('status')).toContainText('복사하지 못했습니다.');
  await expect(page.getByRole('link',{name:'Email cksrjs4726@gmail.com'})).toHaveAttribute('href','mailto:cksrjs4726@gmail.com');
+});
+
+test('hackathon project, award evidence and compact experiences stay connected',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ const card=page.locator('[data-project="one-action"]');
+ await expect(card).toContainText('클라우드 인프라 · 환경 연동');
+ await expect(card).toContainText('예선 최우수상(1등)');
+ await card.getByRole('link',{name:'ONE ACTION 상세 보기',exact:true}).click();
+ const project=page.getByRole('dialog',{name:'ONE ACTION',exact:true});
+ await expect(project).toBeVisible();
+ await expect(project.getByRole('region',{name:'ONE ACTION 프로젝트 이미지'}).getByRole('status')).toContainText('1 / 9');
+ await project.getByRole('region',{name:'ONE ACTION 프로젝트 이미지'}).getByRole('button',{name:'9번 이미지: 내 담당 · 인프라와 환경 연동',exact:true}).click();
+ await expect(project).toContainText('내 담당 · 인프라와 환경 연동');
+ await page.goBack();
+ await expect(project).toHaveCount(0);
+
+ const award=page.locator('#awards .award-row').filter({hasText:'소프트뱅크'});
+ await expect(award).toContainText('2026.10.11');
+ await expect(award.getByRole('link',{name:'ONE ACTION 프로젝트'})).toHaveAttribute('href','/projects/one-action');
+ await award.getByRole('button',{name:'소프트뱅크 예선 최우수상 상장 보기'}).click();
+ const evidence=page.getByRole('dialog',{name:'소프트뱅크 예선 최우수상 상장 보기'});
+ await expect(evidence).toBeVisible();
+ await expect.poll(()=>evidence.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+ await page.keyboard.press('Escape');
+
+ const entries=page.locator('#experience [data-experience]');
+ await expect(entries).toHaveCount(3);
+ for(const entry of await entries.all()){
+  for(const label of ['만든 것','내 역할','수행 방식','결과']) await expect(entry.locator('dt',{hasText:label})).toBeVisible();
+  await expect(entry.locator('details')).not.toHaveAttribute('open','');
+ }
+ const linc=page.locator('[data-experience="linc"]');
+ await expect(linc.getByRole('link',{name:'업무 개선 사례 보기'})).toHaveAttribute('href','/projects/linc-automation');
+ await linc.locator('summary').click();
+ await expect(linc).toContainText('원본 코드는 남아 있지 않아');
 });

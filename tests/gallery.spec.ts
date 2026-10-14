@@ -45,11 +45,49 @@ test('project galleries preserve source order and support keyboard, zoom and nes
   await expect(page.locator('.presentation-viewer')).toBeVisible();
 });
 
+test('ONE ACTION demo sequence loads on mobile and desktop with original images in zoom',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});
+  const titles=['검토 목록','검토 결과·배포 진행','가드 차단','사람의 결정','세 환경 배포','헬스체크 자동 중단','팀 아키텍처 · 설계 자료','ONE ACTION · 서비스 흐름','내 담당 · 인프라와 환경 연동'];
+  for(const width of [390,1440]){
+    await page.setViewportSize({width,height:900});
+    await page.goto('/projects/one-action');
+    await page.reload();
+    const gallery=page.getByRole('region',{name:'ONE ACTION 프로젝트 이미지'});
+    for(const [index,title] of titles.entries()){
+      await expect(gallery.getByRole('status')).toContainText(`${index+1} / 9`);
+      await expect(gallery.locator('.carousel-caption strong')).toHaveText(title);
+      await expect.poll(()=>gallery.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+      expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+      if(index===1||index===6){
+        if(index===1) await expect(gallery.locator('img')).toHaveCSS('object-fit','cover');
+        await gallery.getByRole('button',{name:`${title} 확대 보기`,exact:true}).click();
+        const zoom=page.getByRole('dialog',{name:'ONE ACTION 프로젝트 이미지',exact:true});
+        await expect(zoom.locator('img')).toHaveCSS('object-fit','contain');
+        await expect.poll(()=>zoom.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+        if(index===1) expect(await zoom.locator('img').evaluate((img:HTMLImageElement)=>img.naturalHeight/img.naturalWidth)).toBeCloseTo(1.6,1);
+        await page.keyboard.press('Escape');
+        await expect(zoom).toHaveCount(0);
+      }
+      if(index===4) await expect(gallery).toContainText('서울·부산은 아직 v1');
+      if(index===5) await expect(gallery).toContainText('대회 이후 재현');
+      if(index===6) await expect(gallery).toContainText('GitHub Actions·GHCR');
+      if(index===0||index===6) await page.screenshot({path:`test-results/one-action-gallery-${width}-${index+1}.png`});
+      await gallery.getByRole('button',{name:'다음 이미지',exact:true}).click();
+    }
+  }
+});
+
 test('study records and mobile galleries are readable, swipeable and accessible in dark mode',async({page})=>{
   await page.emulateMedia({reducedMotion:'reduce'});
   for (const width of [390,768,1440]) {
     await page.setViewportSize({width,height:900});
     await page.goto('/#experience');
+    await page.reload(); // Same-fragment navigation preserves native details; start each viewport with a fresh document.
+    for(const id of ['doran','19munpa']) {
+      const entry=page.locator(`[data-experience="${id}"]`);
+      await expect(entry.getByRole('region')).toBeHidden();
+      await entry.locator('summary').click();
+    }
     for (const [name,count] of [['도란도란 알고리즘 스터디 활동 기록',6],['19문파 · 공동 학습 공간 활동 기록',4]] as const) {
       const gallery = page.getByRole('region',{name});
       await gallery.scrollIntoViewIfNeeded();

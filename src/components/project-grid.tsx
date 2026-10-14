@@ -27,10 +27,13 @@ export function ProjectGrid(){
         <p className="eyebrow">{p.eyebrow}</p>
         <div className="project-title-row"><h3>{p.name}</h3>{p.awardIds.length>0&&<span className="award-inline">{p.awardIds.map(id=>{const award=awards.find(a=>a.id===id);return award?<AwardGradeBadge key={id} grade={award.grade}/>:null;})}</span>}</div>
         <p className="project-subtitle">{p.subtitle}</p>
-        <p className="project-summary">{p.summary}</p>
-        {p.cardResult&&<p className="project-result"><span>핵심 결과</span>{p.cardResult}</p>}
+        <dl className="project-card-facts">
+          <div><dt>내 역할</dt><dd>{p.role}</dd></div>
+          <div><dt>주요 기여</dt><dd>{p.summary}</dd></div>
+          {p.cardResult&&<div className="project-card-result"><dt>결과</dt><dd>{p.cardResult}</dd></div>}
+        </dl>
         <div className="tech-tags">{p.technologies.map(t=><span key={t}>{t}</span>)}</div>
-        <div className="project-card-bottom"><span>{p.role.split(' · ').slice(0,2).join(' · ')}</span>{isDraft?<span className="detail-link detail-link--disabled" aria-disabled="true">정리 중</span>:<ProjectLink href={`/projects/${p.slug}`} className="detail-link"><span><span className="sr-only">{p.name} </span>상세 보기</span><ArrowRight size={16}/></ProjectLink>}</div>
+        <div className="project-card-bottom"><span>{p.tags.join(' · ')}</span>{isDraft?<span className="detail-link detail-link--disabled" aria-disabled="true">정리 중</span>:<ProjectLink href={`/projects/${p.slug}`} className="detail-link"><span><span className="sr-only">{p.name} </span>상세 보기</span><ArrowRight size={16}/></ProjectLink>}</div>
       </div>
       {isDraft&&<div className="project-draft-mask"><span>PROJECT IN PROGRESS</span><strong>정리 중</strong><p>프로젝트 내용을 보완하고 있습니다.</p></div>}
     </motion.article>})}</AnimatePresence></div>

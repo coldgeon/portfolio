@@ -147,6 +147,12 @@ p,li { word-break:keep-all; overflow-wrap:anywhere; }
 .award-inline { display:flex; align-items:center; flex-wrap:wrap; gap:5px; }
 .project-subtitle { font-size:15px; font-weight:500; letter-spacing:-.025em; line-height:1.7; }
 .project-summary { color:var(--muted); font-size:14px; line-height:1.9; margin:16px 0 18px; }
+.project-card-facts { display:grid; gap:10px; margin:18px 0 20px; }
+.project-card-facts>div { display:grid; grid-template-columns:61px minmax(0,1fr); gap:12px; align-items:baseline; }
+.project-card-facts dt { font-size:11px; color:var(--faint); }
+.project-card-facts dd { margin:0; color:var(--muted); font-size:13px; line-height:1.8; overflow-wrap:anywhere; }
+.project-card-facts .project-card-result { padding-top:10px; border-top:1px solid var(--border); }
+.project-card-result dd { color:var(--ink); font-weight:500; }
 .tech-tags { display:flex; flex-wrap:wrap; gap:5px; }
 .tech-tags>span { border:1px solid var(--border); border-radius:4px; padding:2px 7px; color:var(--muted); font-family:var(--font-display); font-size:11px; line-height:1.7; background:var(--paper); }
 .project-card-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:auto; padding-top:25px; }
@@ -175,6 +181,32 @@ p,li { word-break:keep-all; overflow-wrap:anywhere; }
 .timeline-content ul { padding-left:18px; margin:12px 0 0; color:var(--muted); font-size:14px; }
 .timeline-content li::marker { color:var(--faint); }
 .timeline-content .experience-takeaway { margin-top:18px; padding:14px 17px; background:var(--surface); border-left:2px solid var(--border); border-radius:0 7px 7px 0; font-size:13px; }
+.experience-facts { display:grid; gap:14px; margin:20px 0 0; }
+.experience-facts>div { display:grid; grid-template-columns:72px minmax(0,1fr); gap:18px; }
+.experience-facts dt { padding-top:2px; color:var(--faint); font-size:12px; }
+.experience-facts dd { margin:0; font-size:14px; color:var(--muted); line-height:1.8; overflow-wrap:anywhere; }
+.experience-facts>div:first-child dd { color:var(--ink); font-weight:500; }
+.experience-facts ul { margin:0; padding-left:16px; font-size:14px; }
+.experience-facts li+li { margin-top:4px; }
+.experience-facts .experience-result { border-top:1px solid var(--border); padding-top:14px; }
+.experience-result dd { color:var(--ink); }
+.experience-details { margin-top:18px; }
+.experience-details summary,.document-flow summary,.content-details summary { display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; list-style:none; font-size:13px; color:var(--muted); padding:12px 0; }
+.experience-details summary::-webkit-details-marker,.document-flow summary::-webkit-details-marker,.content-details summary::-webkit-details-marker { display:none; }
+.experience-details summary:hover,.document-flow summary:hover,.content-details summary:hover { color:var(--ink); }
+.experience-details[open]>summary svg,.document-flow[open]>summary svg { transform:rotate(180deg); }
+.experience-details .experience-takeaway { margin-top:8px; }
+.document-flow { margin-top:28px; border-block:1px solid var(--border); padding-bottom:4px; }
+.document-flow[open] { padding-bottom:16px; }
+.document-flow .flow-diagram { margin-top:12px; }
+.content-details { border-top:1px solid var(--border); margin-top:24px; }
+.content-details summary { font-weight:500; }
+@media(max-width:640px) {
+ .experience-facts>div { grid-template-columns:55px minmax(0,1fr); gap:12px; }
+ .experience-facts dd,.experience-facts ul { font-size:13px; }
+ .experience-facts dt { font-size:11px; }
+ .project-card-facts>div { grid-template-columns:52px minmax(0,1fr); gap:10px; }
+}
 
 .image-carousel { min-width:0; margin:30px 0; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--paper); }
 .carousel-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 18px; border-bottom:1px solid var(--border); }

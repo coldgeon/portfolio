@@ -47,7 +47,7 @@ export function ImageCarousel({images, title, compact = false}: {
         if (swiped.current) {event.preventDefault(); event.stopPropagation(); swiped.current = false;}
       }}>
         <Dialog.Trigger asChild><button type="button" className="carousel-image-button" aria-label={`${current.title} 확대 보기`} aria-describedby={`${id}-caption`}>
-          <Image src={current.src} alt={current.alt} fill sizes={compact ? '(max-width: 767px) 75vw, 650px' : '(max-width: 800px) 100vw, 760px'}/>
+          <Image src={current.src} alt={current.alt} fill style={current.previewCrop === 'top' ? {objectFit:'cover', objectPosition:'top'} : undefined} sizes={compact ? '(max-width: 767px) 75vw, 650px' : '(max-width: 800px) 100vw, 760px'}/>
           <span className="carousel-expand"><Expand size={14}/>확대 보기</span>
         </button></Dialog.Trigger>
       </div>

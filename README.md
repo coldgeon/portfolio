@@ -43,7 +43,7 @@ pnpm audit:performance
 
 Playwright는 설치된 Chrome을 사용하며 3000번 포트에서 프로덕션 서버를 시작하거나 기존 서버를 재사용합니다. Lighthouse는 프로덕션 서버를 대상으로 측정합니다.
 
-최근 결과: 핵심 테스트 8개 통과, 모바일 Lighthouse 성능 95 / 접근성 100 / 권장사항 100 / SEO 100. 측정 환경과 범위는 [검증 기록](docs/VALIDATION.md)을 참고하세요.
+최근 검증(2026-10-14): 프로덕션 빌드와 Playwright 테스트 13개 통과. 이전 모바일 Lighthouse 측정은 성능 95 / 접근성 100 / 권장사항 100 / SEO 100이며, 측정 시점과 범위는 [검증 기록](docs/VALIDATION.md)을 참고하세요.
 
 `pnpm audit:performance`는 서버가 실행 중일 때 사용하며 결과를 `.local/lighthouse-mobile.html`과 JSON으로 저장합니다. Windows에서 임시 Chrome 프로필 삭제 시 생기는 오류를 피하도록 독립 프로필도 `.local` 아래에 유지합니다. Next.js 개발·빌드는 Windows MDX 처리의 호환성을 위해 Webpack을 사용합니다.
 
