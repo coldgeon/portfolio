@@ -66,7 +66,7 @@ export const projects: Project[] = [
       {value:'3개 환경',label:'같은 버전 앱 배포 시연',detail:'AWS EKS · GCP GKE · 로컬 Kubernetes'},
       {value:'2 → 3노드',label:'내 담당 실행·저장 기반',detail:'노드 확장 · Pod 교체 후 파일 보존 확인'},
     ],
-    cover: '/images/projects/one-action/cover.svg', coverWide: '/images/projects/one-action/service-flow.png', accent: '#eef2f9',
+    cover: '/images/projects/one-action/selected-projects-cover.png', coverWide: '/images/projects/one-action/service-flow.png', accent: '#222831',
     gallery: [
       {src:"/images/projects/one-action/demo-01-review-list.png",title:"검토 목록",alt:"같은 앱의 PR이 배포 커밋됨·거절됨·막힘·실패로 나뉘는 ONE ACTION 검토 목록",description:"2026.10.11 리허설 · PR별 검토·배포 상태를 한곳에서 확인합니다."},
       {src:"/images/projects/one-action/demo-02-ai-fix.png",title:"검토 결과·배포 진행",alt:"ONE ACTION 검토 보고서와 환경별 배포 단계 및 접힌 AI 처리 이력 화면",description:"검토 보고서와 환경별 배포 단계·AI 처리 이력을 한 화면에서 확인합니다.",previewCrop:"top"},
