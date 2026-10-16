@@ -122,3 +122,10 @@ Lighthouse 13.4.1 / Headless Chrome 155 / 모바일 시뮬레이션 CPU 4배 / �
 - 전체 검사는 프로젝트 필터·URL 모달·뒤로/앞으로·새로고침·포커스/스크롤 복귀, Figma 슬라이드·이미지 확대, 390/768/1440px, 라이트/다크·키보드·접근성·공유 메타데이터·404를 포함한다.
 - 공개 운영 도메인은 로그인 없이 HTTP 200이며 canonical이 해당 도메인인 것을 확인했다. 릴리스는 GitHub `main`과 annotated `v1.3.0` 태그를 함께 push하고, Vercel Production의 커밋·성공 상태와 운영 화면을 대조한다.
 - 위의 ‘운영 배포 미포함’은 각 로컬 수정 단계의 기록이다. 운영 릴리스 추적은 Git 태그와 GitHub/Vercel 배포 상태를 따른다.
+
+## 2026-10-16 v1.3.1 배포 전 검증
+
+- 사용자 지정 소개 문구로 변경하고, 데스크톱에서 마지막 단어만 별도 줄로 떨어지지 않도록 히어로 제목 최대 크기를 44px에서 42px로 조정했다.
+- `pnpm build`(Webpack·TypeScript 포함), `pnpm lint`, 최종 빌드의 `pnpm test:e2e` 15개 모두 통과.
+- 390/768/1440px에서 새 문구·줄바꿈·가로 넘침 없음 확인. 캡처: `.local/hero-v1.3.1-local-*.png`.
+- GitHub `main`과 annotated `v1.3.1` 태그로 소스 버전을 고정하고 Vercel Production의 커밋·배포 성공 상태 및 공개 화면을 대조한다. Lighthouse 재측정은 포함하지 않는다.

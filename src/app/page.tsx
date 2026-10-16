@@ -28,7 +28,7 @@ const selectedEvidence=[
 export default function HomePage(){return <>
  <section id="hero" className="hero"><div className="hero-inner">
   <p className="hero-eyebrow">PARK CHANGEON · SOFTWARE DEVELOPER</p>
-  <h1>웹 서비스를 만들고,<br/>API·배포·검증을 연결하는<br/>개발자 <span className="hero-name">박찬건</span>입니다.</h1>
+  <h1>웹 서비스를 만들고,<br/>문제를 기술로 해결하고 서비스로 완성하는<br/>개발자 <span className="hero-name">박찬건</span>입니다.</h1>
   <p className="hero-description">화면과 인증 API 구현, AI 실행 흐름 연결, 클라우드 배포를 경험했습니다.<br className="desktop-break"/> 프로젝트마다 직접 맡은 범위와 결과를 확인한 방법을 소개합니다.</p>
   <div className="hero-evidence" aria-label="대표 프로젝트와 담당 범위">{selectedEvidence.map(item=><ProjectLink key={item.slug} href={`/projects/${item.slug}`} className="hero-evidence-link"><span>{item.label}<ArrowUpRight size={14}/></span><strong>{item.name}</strong><small>{item.detail}</small></ProjectLink>)}</div>
   <div className="hero-socials"><a href="#projects">프로젝트 전체 보기 <ArrowDown size={15}/></a><a href={profile.github} target="_blank" rel="noreferrer"><Github size={16}/>GitHub</a>{profile.email&&<a href={`mailto:${profile.email}`}><Mail size={16}/>Email</a>}</div>
