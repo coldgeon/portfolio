@@ -1,6 +1,52 @@
 import {test, expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+test('AI Org presentation is requested explicitly and its six screenshots work in modal and standalone views',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});
+  // Keep the UI check independent of the external Figma service.
+  await page.route('https://embed.figma.com/**',route=>route.fulfill({contentType:'text/html',body:'<!doctype html><html lang="ko"><title>Presentation</title><body>Presentation preview</body></html>'}));
+  await page.goto('/');
+  const trigger=page.getByRole('link',{name:'AI Org Simulation 상세 보기',exact:true});
+  await trigger.click();
+  const project=page.getByRole('dialog',{name:'AI Org Simulation',exact:true});
+  await expect(project).toBeVisible();
+  await expect(page).toHaveURL(/\/projects\/ai-org-simulation$/);
+  await expect(project.locator('.figma-frame')).toHaveCount(0);
+  expect(await project.locator('.figma-presentation').evaluate(element=>!!(element.compareDocumentPosition(element.closest('.project-document')!.querySelector('.mdx-content')!)&Node.DOCUMENT_POSITION_PRECEDING))).toBe(true);
+  await project.getByRole('button',{name:'발표 자료 미리보기',exact:true}).click();
+  await expect(project.locator('.figma-frame')).toHaveAttribute('src',/^https:\/\/embed\.figma\.com\/design\/XBCaez1b86vBYquhEl56gB.*node-id=251-1896/);
+  await expect(project.getByRole('button',{name:'이전 발표 슬라이드',exact:true})).toBeDisabled();
+  await project.getByRole('button',{name:'다음 발표 슬라이드',exact:true}).click();
+  await expect(project.locator('.figma-frame')).toHaveAttribute('src',/node-id=251-1902/);
+  await project.getByRole('combobox',{name:'발표 슬라이드 선택',exact:true}).selectOption('15');
+  await expect(project.locator('.figma-frame')).toHaveAttribute('src',/node-id=251-2098/);
+  await expect(project.getByRole('button',{name:'다음 발표 슬라이드',exact:true})).toBeDisabled();
+  await page.keyboard.press('Escape');
+  await expect(project).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+  await page.goForward();
+  await expect(project).toBeVisible();
+  await page.reload();
+  await expect(project).toHaveCount(0);
+  const gallery=page.getByRole('region',{name:'AI Org Simulation 프로젝트 이미지'});
+  for(const width of [1440,390]){
+    await page.setViewportSize({width,height:1000});
+    await page.goto('/projects/ai-org-simulation');
+    await gallery.scrollIntoViewIfNeeded();
+    for(let index=1;index<=6;index++){
+      await expect(gallery.getByRole('status')).toContainText(`${index} / 6`);
+      await expect.poll(()=>gallery.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+      await gallery.getByRole('button',{name:'다음 이미지',exact:true}).click();
+    }
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await page.screenshot({path:`test-results/ai-org-${width}.png`,fullPage:true});
+  }
+  await gallery.getByRole('button',{name:'랜딩 페이지 확대 보기',exact:true}).click();
+  await expect(page.getByRole('dialog',{name:'AI Org Simulation 프로젝트 이미지',exact:true})).toBeVisible();
+  await page.keyboard.press('Escape');
+  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
+});
+
 test('project galleries preserve source order and support keyboard, zoom and nested modal dismissal', async ({page}) => {
   await page.emulateMedia({reducedMotion:'reduce'});
   await page.goto('/');

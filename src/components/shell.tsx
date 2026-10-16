@@ -46,16 +46,16 @@ export function Shell({children,modal}:{children:React.ReactNode;modal:React.Rea
     try{localStorage.setItem('portfolio-theme',next);}catch{}
   };
   const navContent=(mobile=false)=><>
-    <div className="sidebar-brand"><Link href="/#hero" onClick={()=>setMobileOpen(false)} className="brand"><CodeXml size={19}/><span>coldgeon</span><ChevronDown size={13}/></Link>{!mobile && <button className="icon-button" aria-label="사이드바 접기" onClick={()=>setCollapsed(true)}><PanelLeftClose size={17}/></button>}</div>
+    <div className="sidebar-brand"><Link prefetch={false} href="/#hero" onClick={()=>setMobileOpen(false)} className="brand"><CodeXml size={19}/><span>coldgeon</span><ChevronDown size={13}/></Link>{!mobile && <button className="icon-button" aria-label="사이드바 접기" onClick={()=>setCollapsed(true)}><PanelLeftClose size={17}/></button>}</div>
     <nav aria-label={mobile?'모바일 내비게이션':'주요 내비게이션'}>
       <div className="nav-label">Workspace</div>
-      {navigation.map((item,index)=>{const Icon=icons[index];const selected=currentProject ? item.id==='projects' : active===item.id;return <div key={item.id}>
+      {navigation.map((item,index)=>{const Icon=icons[index];const selected=currentProject ? item.id===(currentProject.placement==='experience'?'experience':'projects') : active===item.id;return <div key={item.id}>
         {(index===2||index===5||index===7)&&<div className="nav-spacer"/>}
         <div className={`nav-row ${selected?'selected':''}`}>
-          <Link href={`/#${item.id}`} aria-current={selected?'location':undefined} onClick={()=>{setActive(item.id);setMobileOpen(false);}}><Icon size={17}/><span>{item.label}</span></Link>
+          <Link prefetch={false} href={`/#${item.id}`} aria-current={selected?'location':undefined} onClick={()=>{setActive(item.id);setMobileOpen(false);}}><Icon size={17}/><span>{item.label}</span></Link>
           {item.id==='projects'&&<button className="nav-expand" aria-label="프로젝트 목록 펼치기" aria-expanded={expanded} onClick={()=>setExpanded(!expanded)}>{expanded?<ChevronDown size={15}/>:<ChevronRight size={15}/>}</button>}
         </div>
-        {item.id==='projects'&&expanded&&<div className="project-nav">{projects.map(p=>p.availability==='draft'?<span className="project-nav-draft" key={p.slug}><span className="small-square"/>{p.name}<em>정리 중</em></span>:<ProjectLink key={p.slug} href={`/projects/${p.slug}`} aria-current={currentProject?.slug===p.slug?'page':undefined} onClick={()=>setMobileOpen(false)}><span className="small-square"/>{p.name}</ProjectLink>)}</div>}
+        {item.id==='projects'&&expanded&&<div className="project-nav">{projects.filter(p=>p.placement!=='experience').map(p=>p.availability==='draft'?<Link prefetch={false} href="/#ai-org-simulation-record" onClick={()=>setMobileOpen(false)} key={p.slug}><span className="small-square"/>{p.name}<em>정리 중</em></Link>:<ProjectLink key={p.slug} href={`/projects/${p.slug}`} aria-current={currentProject?.slug===p.slug?'page':undefined} onClick={()=>setMobileOpen(false)}><span className="small-square"/>{p.name}</ProjectLink>)}</div>}
       </div>;})}
     </nav>
     <div className="sidebar-bottom"><button className="theme-control" onClick={toggleTheme} aria-label={theme==='light'?'다크 모드로 변경':'라이트 모드로 변경'}>{theme==='light'?<Moon size={17}/>:<Sun size={17}/>}<span>{theme==='light'?'Dark mode':'Light mode'}</span></button><div className="profile"><div className="avatar">CG</div><div><strong>{profile.name}</strong><span>{profile.role}</span></div></div></div>
@@ -68,7 +68,7 @@ export function Shell({children,modal}:{children:React.ReactNode;modal:React.Rea
         <div className="breadcrumb">
           <button className={`icon-button desktop-expand ${collapsed?'visible':''}`} aria-label="사이드바 펼치기" onClick={()=>setCollapsed(false)}><PanelLeftOpen size={18}/></button>
           <Dialog.Root open={mobileOpen} onOpenChange={setMobileOpen}><Dialog.Trigger asChild><button className="icon-button mobile-menu-button" aria-label="메뉴 열기"><Menu size={20}/></button></Dialog.Trigger><Dialog.Portal><Dialog.Overlay className="mobile-overlay"/><Dialog.Content className="mobile-sidebar" aria-describedby={undefined}><Dialog.Title className="sr-only">사이트 내비게이션</Dialog.Title><Dialog.Close className="icon-button mobile-close" aria-label="메뉴 닫기"><X size={18}/></Dialog.Close>{navContent(true)}</Dialog.Content></Dialog.Portal></Dialog.Root>
-          <Folder size={15}/><Link href="/#hero">Portfolio</Link><ChevronRight size={12}/><span className="breadcrumb-current">{currentProject?.name||navigation.find(n=>n.id===active)?.label||'Home'}</span>
+          <Folder size={15}/><Link prefetch={false} href="/#hero">Portfolio</Link><ChevronRight size={12}/><span className="breadcrumb-current">{currentProject?.name||navigation.find(n=>n.id===active)?.label||'Home'}</span>
         </div>
         <span className="topbar-identity">{profile.name} <span> / </span> {profile.role}</span>
       </header>

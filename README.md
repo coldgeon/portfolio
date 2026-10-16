@@ -19,11 +19,13 @@ pnpm start
 - `src/content/`: 프로젝트별 MDX 사례 문서. 모달과 상세 페이지가 같은 문서를 사용합니다.
 - `public/images/`: 프로젝트 커버와 공개 가능한 서비스 화면입니다.
 - `profile.portrait`와 `education`: About me 프로필 사진과 학력·교육 활동 이력. 노션 사진 사본은 `public/images/park-changeon.jpg`입니다.
-- `skillGroups[].items[].icon`: `public/icons/`에 저장한 기술별 SVG 파일명. 아이콘 출처는 [에셋 크레딧](docs/ASSET_CREDITS.md)에 기록합니다.
+- `skillGroups[].items[]`: 기술명과 로컬 아이콘(`icon`) 또는 일반 심벌(`symbol`). 분야별로 아이콘만 표시하고 호버·포커스·터치 시 기술명을 안내합니다. 아이콘 출처는 [에셋 크레딧](docs/ASSET_CREDITS.md)에 기록합니다.
 
 프로젝트를 추가할 때 콘텐츠 데이터, MDX 문서와 `ProjectDocument`의 문서 매핑을 함께 추가합니다. `Credential.published`가 true인 기록만 표시합니다. SAP 기초·중급 과정은 수료증의 기관·교육 기간·시간을 확인해 각각 공개했습니다.
 
-MDX의 `<CaseStudy>`는 문제 해결 아코디언, `<Outcome />`은 해당 프로젝트의 결과·증빙을 표시합니다. 문서는 협업 사례 → `<Outcome />` → 회고 순서로 마무리합니다.
+`Project.placement`는 대표(`featured`)·보조(`supporting`)·업무 경험(`experience`) 비중을 정합니다. AI Org Simulation은 4인 팀의 백엔드·인프라 프로토타입으로 보조 프로젝트에 공개하며, 상세 모달·독립 주소를 제공합니다. `figmaPresentation`은 사용자가 미리보기를 누를 때 Figma 원본을 불러오며, 서비스 화면은 로컬 카루셀로 제공합니다. 실제 근거와 확인 필요 항목은 [범용 콘텐츠 검토](docs/GENERAL_PORTFOLIO_REVIEW.md)를 참고하세요.
+
+MDX의 `<CaseStudy>`는 문제 해결 아코디언, `<CaseEvidence title="…" />`는 같은 제목의 실제 증빙, `<Outcome />`은 결과·검증 방법·한계를 표시합니다. 문서는 협업 사례 → `<Outcome />` → 회고 순서로 마무리합니다.
 
 증빙은 공개용으로 준비한 이미지를 `public/evidence/`에 넣고 `{ title, src, kind: 'image', alt }`를 항목의 `evidence`에 연결합니다. PDF는 `kind: 'pdf'`로 지정합니다. 노션 첨부파일의 만료되는 URL을 그대로 붙이지 않습니다. 파일이 없는 항목에는 증빙 버튼을 표시하지 않습니다.
 
@@ -43,7 +45,9 @@ pnpm audit:performance
 
 Playwright는 설치된 Chrome을 사용하며 3000번 포트에서 프로덕션 서버를 시작하거나 기존 서버를 재사용합니다. Lighthouse는 프로덕션 서버를 대상으로 측정합니다.
 
-최근 검증(2026-10-14): 프로덕션 빌드와 Playwright 테스트 13개 통과. 이전 모바일 Lighthouse 측정은 성능 95 / 접근성 100 / 권장사항 100 / SEO 100이며, 측정 시점과 범위는 [검증 기록](docs/VALIDATION.md)을 참고하세요.
+배포 전 검증(2026-10-16, v1.3.0): 타입·린트·프로덕션 빌드와 Playwright 15개 테스트 통과. 마지막 모바일 Lighthouse 측정(2026-10-14)은 성능 82 / 접근성 100 / 권장사항 100 / SEO 100입니다. 이번 릴리스에서 성능을 재측정하지 않았으며 측정 조건·남은 비용은 [검증 기록](docs/VALIDATION.md)을 참고하세요.
+
+릴리스는 `package.json` 버전과 같은 annotated Git 태그(`v1.3.0`)로 관리합니다. `main` 변경은 Vercel Git 연동으로 운영 배포하며, 태그는 배포한 소스 버전을 고정합니다. 운영 주소는 [coldgeon 포트폴리오](https://portfolio-alpha-mauve-5n0rjz2lpl.vercel.app)입니다.
 
 `pnpm audit:performance`는 서버가 실행 중일 때 사용하며 결과를 `.local/lighthouse-mobile.html`과 JSON으로 저장합니다. Windows에서 임시 Chrome 프로필 삭제 시 생기는 오류를 피하도록 독립 프로필도 `.local` 아래에 유지합니다. Next.js 개발·빌드는 Windows MDX 처리의 호환성을 위해 Webpack을 사용합니다.
 

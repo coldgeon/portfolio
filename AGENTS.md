@@ -6,7 +6,7 @@ Deploy this developer portfolio as the production site through **Vercel**. The r
 
 - Repository: `https://github.com/coldgeon/portfolio.git`
 - Branch: `main`
-- Current pushed commit: `0dc2954`
+- Release versions: annotated `vX.Y.Z` Git tags on production commits. Check `git describe --tags --always` and `origin/main` for the current version.
 
 Use Vercel rather than GitHub Pages. The site uses Next.js App Router with Intercepting Routes and Parallel Routes so static-only hosting is not the intended deployment target.
 
@@ -40,7 +40,7 @@ The user has asked to publish the site with the content currently in the reposit
 
 Do not alter, remove, or add contact details, project claims, awards, certificates, or evidence as part of deployment work. Do not introduce analytics, tracking, forms, third-party SDKs, environment secrets, or a database.
 
-AI Org Simulation is intentionally marked **정리 중**. Its card remains visible on the home page, but its detail page and direct URL must stay unavailable (404) until the content is complete.
+AI Org Simulation was completed for portfolio review on 2026-10-16 with the owner's confirmation of a four-person team and successful end-to-end rerun after runtime adjustments. Keep it as a supporting prototype with an available detail page, Figma presentation and service screenshots. Distinguish CSV-backed demo execution from the implemented DB read layer and future persistence work.
 
 ## Required checks before publishing
 
@@ -56,7 +56,7 @@ After Vercel deploys, verify:
 - `/` loads and the selected-projects cards display correctly.
 - `/projects/nextify`, `/projects/alarm-u`, and `/projects/replendar` load as standalone pages.
 - Opening those projects from the home page opens the URL-backed modal and browser back closes it.
-- `/projects/ai-org-simulation` returns 404.
+- `/projects/ai-org-simulation` loads, its local screenshot gallery works, and its Figma presentation loads only after requesting the preview.
 - The Nextify PDF and public image evidence load.
 - Mobile layout at approximately 390px has no horizontal overflow.
 

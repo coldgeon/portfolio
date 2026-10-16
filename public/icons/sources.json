@@ -73,6 +73,22 @@
     {
       "name": "lighthouse",
       "url": "https://raw.githubusercontent.com/GoogleChrome/lighthouse/7d21d0b9037b0e940931587ffe691087b1e15d70/assets/lighthouse-logo.svg"
+    },
+    {
+      "name": "kubernetes",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/kubernetes/kubernetes-original.svg"
+    },
+    {
+      "name": "terraform",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/terraform/terraform-original.svg"
+    },
+    {
+      "name": "amazonwebservices",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+    },
+    {
+      "name": "googlecloud",
+      "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/googlecloud/googlecloud-original.svg"
     }
   ]
 }

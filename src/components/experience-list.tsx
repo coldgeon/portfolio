@@ -4,7 +4,9 @@ import {ImageCarousel} from './image-carousel';
 import {ProjectLink} from './project-link';
 
 export function ExperienceList() {
-  return <div className="timeline">{experiences.map(experience => (
+  const work=experiences.filter(experience=>experience.projectSlug);
+  const studies=experiences.filter(experience=>!experience.projectSlug);
+  return <>{[{label:'Work',entries:work},{label:'Community & Study',entries:studies}].map(group=><section className="experience-group" key={group.label}><h3 className="experience-group-title">{group.label}</h3><div className="timeline">{group.entries.map(experience => (
     <article className="timeline-row" key={experience.id} data-experience={experience.id}>
       <div className="timeline-year">
         {experience.year ? <time>{experience.year}</time> : <span>Work</span>}
@@ -28,5 +30,5 @@ export function ExperienceList() {
         </details>
       </div>
     </article>
-  ))}</div>;
+  ))}</div></section>)}</>;
 }

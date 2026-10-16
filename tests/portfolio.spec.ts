@@ -4,10 +4,10 @@ import AxeBuilder from '@axe-core/playwright';
 test('project filtering, modal history, scroll and focus restoration',async({page})=>{
  await page.setViewportSize({width:1440,height:1000});
  await page.goto('/');
- await expect(page.locator('[data-project="ai-org-simulation"] .project-draft-mask')).toContainText('정리 중');
- await expect(page.locator('[data-project="ai-org-simulation"]').getByRole('link')).toHaveCount(0);
+ await expect(page.locator('[data-project="ai-org-simulation"] .record-status')).toHaveCount(0);
+ await expect(page.locator('[data-project="ai-org-simulation"]').getByRole('link')).toHaveAttribute('href','/projects/ai-org-simulation');
  await page.getByRole('button',{name:'협업·주도',exact:true}).click();
- await expect(page.locator('.project-card')).toHaveCount(3);
+ await expect(page.locator('.project-card')).toHaveCount(2);
  const trigger=page.getByRole('link',{name:'Nextify 상세 보기',exact:true});
  await trigger.focus();
  const scroll=await page.evaluate(()=>window.scrollY);
@@ -86,7 +86,7 @@ test('mobile drawer, fullscreen modal and sidebar collapse',async({page})=>{
 });
 
 test('all detail pages, metadata, assets and 404',async({page,request})=>{
- for(const [slug,name] of [['nextify','Nextify'],['one-action','ONE ACTION'],['alarm-u','알림 it'],['replendar','Replendar'],['linc-automation','LINC 업무 자동화']]){
+ for(const [slug,name] of [['nextify','Nextify'],['one-action','ONE ACTION'],['alarm-u','알림 it'],['replendar','Replendar'],['linc-automation','LINC 업무 자동화'],['ai-org-simulation','AI Org Simulation']]){
    const response=await page.goto(`/projects/${slug}`);
    expect(response?.status()).toBe(200);
    await expect(page).toHaveTitle(`${name} | 박찬건`);
@@ -101,9 +101,6 @@ test('all detail pages, metadata, assets and 404',async({page,request})=>{
      await expect.poll(()=>img.evaluate((image:HTMLImageElement)=>image.complete&&image.naturalWidth>0)).toBe(true);
    }
  }
- const draftResponse=await page.goto('/projects/ai-org-simulation');
- expect(draftResponse?.status()).toBe(404);
- await expect(page.getByRole('heading',{name:'페이지를 찾을 수 없습니다.'})).toBeVisible();
  const response=await page.goto('/projects/not-real');
  expect(response?.status()).toBe(404);
  await expect(page.getByRole('heading',{name:'페이지를 찾을 수 없습니다.'})).toBeVisible();
@@ -167,7 +164,7 @@ test('keyboard navigation through drawer, project, accordion and back',async({pa
  const dialog=page.getByRole('dialog',{name:'Nextify',exact:true});
  await expect(dialog).toBeVisible();
  const firstCase=dialog.locator('.case-trigger').first();
- for(let i=0;i<12&&!await firstCase.evaluate(el=>el===document.activeElement);i++)await page.keyboard.press('Tab');
+ for(let i=0;i<25&&!await firstCase.evaluate(el=>el===document.activeElement);i++)await page.keyboard.press('Tab');
  await expect(firstCase).toBeFocused();
  await expect(firstCase).toHaveAttribute('aria-expanded','true');
  await page.keyboard.press('Space');
@@ -219,4 +216,43 @@ test('hackathon project, award evidence and compact experiences stay connected',
  await expect(linc.getByRole('link',{name:'업무 개선 사례 보기'})).toHaveAttribute('href','/projects/linc-automation');
  await linc.locator('summary').click();
  await expect(linc).toContainText('원본 코드는 남아 있지 않아');
+});
+
+test('skill icon tooltips, evidence and work navigation are keyboard accessible',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/');
+ await expect(page.locator('#projects [data-project="linc-automation"]')).toHaveCount(0);
+ await expect(page.locator('#skills a')).toHaveCount(0);
+ const skill=page.locator('#skills').getByRole('button',{name:'Java',exact:true});
+ await skill.focus();
+ await expect(page.getByRole('tooltip')).toHaveText('Java');
+ await page.keyboard.press('Escape');
+ await expect(page.getByRole('tooltip')).toHaveCount(0);
+ await skill.blur();
+ await skill.hover();
+ await expect(page.getByRole('tooltip')).toHaveText('Java');
+ await page.mouse.move(0,0);
+ await expect(page.getByRole('tooltip')).toHaveCount(0);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
+ await page.getByRole('link',{name:'Nextify 상세 보기',exact:true}).click();
+ const project=page.getByRole('dialog',{name:'Nextify',exact:true});
+ const proof=project.locator('.case-evidence button').first();
+ await proof.click();
+ const evidence=page.locator('.evidence-dialog');
+ await expect(evidence).toBeVisible();
+ await expect.poll(()=>evidence.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+ await page.keyboard.press('Escape');
+ await expect(evidence).toHaveCount(0);
+ await expect(proof).toBeFocused();
+ await expect(project).toBeVisible();
+ await page.goto('/projects/linc-automation');
+ await page.getByRole('button',{name:'메뉴 열기',exact:true}).click();
+ await expect(page.getByRole('link',{name:'Experience',exact:true})).toHaveAttribute('aria-current','location');
+ await page.keyboard.press('Escape');
+ const workReturn=page.getByRole('link',{name:'업무 경험 목록',exact:true});
+ await expect(workReturn).toHaveAttribute('href','/#experience');
+ await workReturn.click();
+ await expect(page).toHaveURL(/\/#experience$/);
 });

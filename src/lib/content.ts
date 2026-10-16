@@ -5,10 +5,14 @@ export type Project = {
   slug: string; name: string; eyebrow: string; subtitle: string; summary: string;
   role: string; period?: string; team?: string; tags: Strength[]; technologies: string[];
   availability?: 'published' | 'draft';
+  placement: 'featured' | 'supporting' | 'experience';
+  context: string; teamScope: string; verification: string; limitations: string;
+  resources?: {title: string; href: string; note?: string}[];
   highlights?: {value: string; label: string; detail: string}[]; cardResult?: string;
   cover: string; coverWide: string; accent: string; contributions: string[]; outcome: string;
   flow: { title: string; detail: string }[]; github?: string; awardIds: string[];
   evidence: Evidence[]; gallery?: GalleryImage[]; presentation?: { title: string; src: string; preview: string; pages: number };
+  figmaPresentation?: { title: string; href: string; embedSrc: string; frameIds: string[] };
 };
 export type Experience = { id: string; name: string; year?: string; type: string; summary: string; role: string; actions: string[]; outcome: string; gallery?: GalleryImage[]; takeaway?: string; note?: string; projectSlug?: string };
 export type Credential = { id: string; name: string; kind: 'certificate' | 'education'; issuer: string; date: string; detail: string; published: boolean; evidence?: Evidence };
@@ -22,11 +26,11 @@ export const profile = {
   phone: '010-3327-4726',
   phoneHref: '+821033274726',
   portrait: '/images/park-changeon.jpg',
-  description: '업무의 흐름을 이해하고, 자동화와 검증으로 개선을 만드는 개발자 박찬건입니다. LINC 업무 자동화, Nextify 전환·검증, 알림 it 관리자 인증·배포 경험을 소개합니다.',
+  description: '웹 서비스의 기능 구현부터 API 연동, AI 실행 흐름, 배포와 검증까지 경험한 개발자 박찬건입니다. Nextify의 구조·검증기, 알림 it의 관리자 인증, ONE ACTION의 클라우드 환경 연동을 소개합니다.',
 };
 
 export const education: Education[] = [
-  {id:'ulsan',institution:'울산대학교',program:'IT융합학과',kind:'university'},
+  {id:'ulsan',institution:'울산대학교',program:'IT융합학과',kind:'university',period:'2027.02 졸업 예정'},
   {id:'goorm-univ-4',institution:'구름톤 UNIV',program:'4기 · Backend Developer',kind:'community',period:'2025.03 — 2025.07'},
   {id:'umc-7',institution:'전국 IT 연합 동아리 UMC',program:'7기 · Web Frontend',kind:'community',period:'2024.09 — 2025.01'},
   {id:'umc-6',institution:'전국 IT 연합 동아리 UMC',program:'6기 · Web Frontend',kind:'community',period:'2024.03 — 2024.08'},
@@ -35,11 +39,16 @@ export const education: Education[] = [
 export const projects: Project[] = [
   {
     slug: 'nextify', name: 'Nextify', eyebrow: 'CAPSTONE · TEAM LEAD',
+    placement: 'featured',
+    context: 'React 프로젝트를 Next.js로 옮길 때 라우팅·파일 구조·실행 경계의 변경이 연쇄적으로 발생하는 문제를 다뤘습니다.',
+    teamScope: '팀이 CLI·변환 규칙·AI 보조 변환·Review Extension을 개발했습니다. 저는 전체 단계 설계, 검증기와 성능 보고서, 팀 조율을 맡았습니다.',
+    verification: '초기 20개 평가와 최종 30개 팀 평가를 구분했습니다. 타입·빌드 검사, 전후 Diff와 동일 환경 Lighthouse 3회 중앙값으로 결과를 확인했습니다.',
+    limitations: '30/30은 지원 범위 내 빌드 성공입니다. 모든 실행 기능의 동일성이나 임의의 React 프로젝트 자동 전환을 보장하지 않으며, 동적 라우트·충돌은 수동 검토가 필요합니다.',
     subtitle: 'React → Next.js 마이그레이션 자동화 도구',
     summary: '5단계 전환 흐름을 설계하고, 오류 검증기와 반복 측정 기반 성능 보고서를 구현했습니다.',
     cardResult: '최종 평가 · 지원 범위 내 30개 프로젝트 모두 빌드 성공',
     highlights: [{value:'30 / 30',label:'최종 평가 빌드 성공',detail:'지원 범위 내 오픈소스 30개 대상 · 팀 결과'},{value:'2 → 18 / 20',label:'프로토타입 빌드 성공',detail:'20개 대상 평가 · 최종 30개 평가와 별도'},{value:'5단계',label:'내가 설계한 전환 흐름',detail:'검증기와 성능 비교 보고서 개발'}],
-    role: '팀장 · 전체 흐름 설계 · 검증기 개발', period: '2025 — 2026', team: '4명 → 3명',
+    role: '팀장 · 구조 설계 · 검증기·보고서 개발', period: '2025 — 2026 · 세부 월 미확인', team: '4명 → 3명',
     tags: ['구조 설계', '검증·운영', '협업·주도'], technologies: ['React', 'Next.js', 'Node.js', 'ts-morph', 'Gemini API', 'Lighthouse'],
     cover: '/images/projects/nextify/selected-projects-cover.png', coverWide: '/images/nextify-wide.svg', accent: '#e4eae6',
     contributions: ['설계: 5단계·86개 작업을 규칙·AST·제약형 AI·사용자 판단으로 분리', '검증: 타입체크·자동 보정·재검사·오류 증가 시 롤백 구현', '보고서: 동일 환경 3회 측정의 중앙값으로 FCP·LCP·SEO 비교', '팀 리딩: 4→3명 축소 후 주제 전환과 목표·역할 재정렬'],
@@ -55,6 +64,12 @@ export const projects: Project[] = [
   },
   {
     slug: 'one-action', name: 'ONE ACTION', eyebrow: 'SOFTBANK HACKATHON · CLOUD INFRA',
+    placement: 'featured',
+    context: 'PR 검토 결과를 서로 다른 클라우드·로컬 환경에 배포하고, 실제 실행 상태를 확인하는 해커톤 플랫폼입니다.',
+    teamScope: '저는 EKS·GKE 실행 기반과 권한·시크릿·저장소·환경 연결을 맡았습니다. AI 판단·API·CI/CD·모니터링 기능은 팀원의 담당이며 함께 연동했습니다.',
+    verification: 'IAM 조건 보완 후 ALB·외부 HTTP 200, 시험 Pod 교체 후 파일 보존, HTTPS 경로 수정 후 동료의 로컬 알림 수신을 확인했습니다.',
+    limitations: '짧은 해커톤 구축·시연 경험입니다. 장기 운영·백업·가용영역 장애 복구를 검증하지 않았습니다. 시연 종료 후 클라우드 자원을 정리해 기록과 화면으로 소개합니다.',
+    resources: [{title:'시연 화면·검증 기록',href:'https://github.com/Crystal-SBHackathon2026/.github/blob/78beb4ccfff42de1b573c18d5681359dc13b4d47/profile/DEMO.md',note:'고정된 공개 기록 · 팀 서비스 시연'},{title:'공개 인프라 구성',href:'https://github.com/Crystal-SBHackathon2026/oneaction-infra/tree/b25600f308dcd42e9a7e900c07acda2434ef88a0',note:'일부 시점의 사본 · 최종 CSI·Gateway 변경은 미포함'}],
     subtitle: 'PR 검토부터 AWS·GCP·로컬 배포까지 연결하는 플랫폼',
     summary: 'EKS·GKE 실행 기반, 권한·시크릿·저장소와 외부 접속·로컬 알림 경로를 구성하고 검증했습니다.',
     role: '클라우드 인프라 · 환경 연동', period: '2026.10.05 — 10.11', team: 'Team Crystal · 4명',
@@ -85,12 +100,17 @@ export const projects: Project[] = [
   },
   {
     slug: 'alarm-u', name: '알림 it', eyebrow: 'AUTHENTICATION · OPERATIONS',
+    placement: 'featured', period: '2025 — 2026 · 세부 월 미확인', team: '기존 서비스 팀 · 인원 미확인',
+    context: '울산대학교 공지 알림 서비스의 유지보수에 참여하며 기존 API와 배포 환경에 관리자 기능을 추가했습니다.',
+    teamScope: '앱·공지 수집·기존 공지 API는 팀의 기존 기능입니다. 저는 관리자 화면, 로그인·갱신·로그아웃 API 수정, 알림 식별자 암호화와 통합 배포를 맡았습니다.',
+    verification: '본인 커밋에서 HttpOnly 쿠키·RTR·JPA 저장, 새로고침 403 수정과 JSON이 아닌 인증 응답 처리를 확인했습니다. 새로고침 후 인증 복원은 작업 기록으로 확인했습니다.',
+    limitations: '유지보수와 관리자 기능을 담당한 범위입니다. 전체 서비스 운영 책임이나 보안 완성을 주장하지 않습니다. 인증 예외 분기의 구현 확인과 모든 상황의 실행 검증은 구분합니다.',
     subtitle: '울산대학교 공지 알림 서비스 · 관리자 기능·백엔드 유지보수',
     summary: '관리자 인증·API 연동·통합 배포를 구현하고, 기존 알림 식별자에 RSA·AES 암호화를 적용했습니다.',
     cardResult: '메모리 + HttpOnly 쿠키 · 새로고침 후 인증 복원 · RTR',
     highlights: [{value:'Memory',label:'액세스 토큰 보관',detail:'로컬스토리지에 남기지 않는 구조'},{value:'HttpOnly + RTR',label:'리프레시 토큰 관리',detail:'쿠키 보관 · 갱신 시 토큰 교체'},{value:'통합 배포',label:'기존 운영 환경에 연결',detail:'Vite · Spring Boot · Nginx'}],
     role: '관리자 인증 · API 연동 · 배포',
-    tags: ['구조 설계', '검증·운영'], technologies: ['Vite', 'JavaScript', 'Spring Boot', 'HttpOnly · RTR', 'Nginx'],
+    tags: ['구조 설계', '검증·운영'], technologies: ['Vite', 'JavaScript', 'Java · Spring Boot', 'MySQL · JPA', 'HttpOnly · RTR', 'Nginx'],
     cover: '/images/projects/alarm-it/overview.png', coverWide: '/images/projects/alarm-it/overview.png', accent: '#eef8f6',
     gallery: [
       {src:'/images/projects/alarm-it/gallery-1.jpg',title:'알림 it · 서비스 소개',alt:'울산대학교 공지 알림 서비스 알림 it의 앱 소개와 주요 화면'},
@@ -99,13 +119,18 @@ export const projects: Project[] = [
       {src:'/images/projects/alarm-it/gallery-4.png',title:'관심 공지 모아보기',alt:'원하는 공지를 북마크하는 알림 it 화면'},
       {src:'/images/projects/alarm-it/gallery-5.png',title:'학부별 공지 확인',alt:'학부별 공지 목록과 카테고리를 보여주는 알림 it 화면'},
     ],
-    contributions: ['인증: 메모리 액세스 토큰·HttpOnly 쿠키·RTR·새로고침 후 인증 복원', '관리자 기능: Vite·JavaScript 화면과 Spring Boot API 연동', '배포: 프론트 빌드를 백엔드에 통합해 온프레미스·Nginx 환경에 제공', '데이터 보호: device_id·FCM token에 RSA·AES 하이브리드 암호화 적용'],
+    contributions: ['백엔드 수정: 로그인·갱신·로그아웃 API와 JPA RefreshToken 저장·교체 로직', '화면·연동: Vite·JavaScript 관리자 화면, 기존 공지 API 연결과 인증 복원', '배포: /admin 정적 파일·SPA 경로를 Spring Boot에 통합하고 Nginx 환경에 연결', '데이터 보호: 기존 device_id·FCM token에 RSA·AES 하이브리드 암호화 적용'],
     outcome: '관리자 인증·화면·API를 기존 운영 환경에 통합하고 알림 식별자 보호를 보완했습니다.',
     flow: [{title:'로그인·발급',detail:'기존 Spring Boot API'},{title:'토큰 보관',detail:'메모리 · HttpOnly 쿠키'},{title:'새로고침·갱신',detail:'액세스 토큰 재발급 · RTR'},{title:'서비스 제공',detail:'백엔드 통합 · Nginx'}],
     awardIds: [], evidence: [],
   },
   {
     slug: 'linc-automation', name: 'LINC 업무 자동화', eyebrow: 'WORK EXPERIENCE · AUTOMATION',
+    placement: 'experience', period: '수행 기간 미확인', team: '사업단 근로 · 개인 자동화 작업',
+    context: '사업단 근로 중 두 Excel 명단을 대조하며 비어 있는 기업명을 수작업으로 채우는 반복 업무가 있었습니다.',
+    teamScope: '기업 명단 비교 업무를 수행하고, 해당 업무를 처리하는 Python 프로그램을 직접 만들었습니다.',
+    verification: '실제 업무 자료에 실행한 뒤 기업명이 맞게 입력됐는지 사람이 직접 확인했습니다.',
+    limitations: '원본 코드와 전후 측정 자료가 남아 있지 않습니다. 구체적인 매칭 규칙·예외 알고리즘·처리량·시간 절감률은 주장하지 않습니다.',
     subtitle: '두 Excel 파일을 대조해, 비어 있는 기업명을 채우다.',
     summary: '두 Excel 자료를 대조해 기업명을 채우는 Python 프로그램을 만들고, 실제 입력 결과를 직접 확인했습니다.',
     role: '기업명 입력 자동화 · 결과 확인', tags: ['구조 설계', '검증·운영'], technologies: ['Python', 'pandas', 'NumPy', 'Excel'],
@@ -118,11 +143,16 @@ export const projects: Project[] = [
   },
   {
     slug: 'replendar', name: 'Replendar', eyebrow: 'UMC 7TH · WEB LEAD',
+    placement: 'supporting', period: '2024 — 2025 · UMC 7기', team: 'Web 파트 팀장 · 전체 인원 미확인',
+    context: '대학생의 과제·일정을 확인하고 공유하는 서비스입니다. Web 파트의 화면 개발과 백엔드 API 협업에 참여했습니다.',
+    teamScope: '과제·친구·프로필 기능은 팀의 서비스 전체 구성입니다. 직접 구현한 범위는 카카오 로그인·API 연결, 전역 테마·인터랙션이며 팀장으로 PR·일정·문서를 관리했습니다.',
+    verification: '공개 저장소의 React·TypeScript·Vite·styled-components 구성과 로그인 연동 코드, 테마 화면을 확인할 수 있습니다. 로그인 이미지는 서버 이용 기간 종료 후 로컬에서 남긴 화면입니다.',
+    limitations: '프로젝트 완료 시점에 프론트를 배포했습니다. 현재 백엔드 데모는 종료되어 화면·코드로 소개하며, 이용자 수나 성능 개선율은 측정 근거가 없습니다.',
     subtitle: '대학생 과제·일정 관리 및 공유 서비스',
     summary: 'Web 파트의 초기 세팅·일정·PR 리뷰를 맡고, 카카오 로그인·테마 변경·API 연동·배포를 구현했습니다.',
     cardResult: '웹 결과물·GitHub Pages 배포 · UMC 7기 베스트 파트원',
     role: '프론트 팀장 · 초기 세팅 · PR 리뷰',
-    tags: ['협업·주도'], technologies: ['React', 'TypeScript', 'Kakao Login', 'GitHub Pages'],
+    tags: ['협업·주도'], technologies: ['React', 'TypeScript', 'Vite', 'styled-components', 'Kakao Login', 'GitHub Pages'],
     cover: '/images/projects/replendar/overview.png', coverWide: '/images/projects/replendar/overview.png', accent: '#eef1ee',
     gallery: [
       {src:'/images/projects/replendar/gallery-1.png',title:'Replendar · 서비스 소개',alt:'대학생을 위한 과제 관리 서비스 Replendar의 대표 화면'},
@@ -144,15 +174,30 @@ export const projects: Project[] = [
   },
   {
     slug: 'ai-org-simulation', name: 'AI Org Simulation', eyebrow: 'AI AGENT · BACKEND & INFRA',
+    placement: 'supporting', period: '2026.05', team: '4명 · Google AI Agent Challenge',
+    context: '프로젝트를 시작하기 전, PM이 PRD와 팀 후보를 바탕으로 역할 배분과 수행 리스크를 살펴보는 AI 서비스 프로토타입입니다.',
+    teamScope: '저는 데이터 스키마·DB 계층·조회 API, PDF·세션 API와 Agent 실행 연결·SSE, Cloud Run 배포를 맡았습니다. 프론트 주요 화면과 Agent 내부 분석·추천·역할극·보고서 로직은 팀원의 구현입니다.',
+    verification: 'Cloud Logging으로 메모리 초과를 확인하고 실행 설정을 바꾼 뒤 PDF 입력→분석→팀 선택→가상 회의→리포트 전체 흐름을 다시 완료했습니다. 공개 코드·본인 커밋·배포 문서와 시연 화면을 함께 제공합니다.',
+    limitations: '더미 데이터로 검증한 시연용 프로토타입입니다. 외부 협업 도구의 실시간 수집은 미구현이며, 최종 추천 경로는 CSV를 사용합니다. 세션 영속화·비동기 작업·타임아웃·재시도는 후속 과제입니다. 장기 운영·모델 학습 경험으로 확대하지 않습니다.',
     subtitle: 'PRD 분석·팀 추천·가상 회의·리포트 프로토타입',
-    summary: 'PDF·세션 API와 AI·SSE·리포트 흐름을 연결하고 Cloud Run 배포·로그 분석을 담당했습니다.',
-    role: 'Backend · Infra', availability: 'draft',
-    tags: ['구조 설계', '검증·운영'], technologies: ['Python', 'FastAPI', 'Vertex AI', 'Cloud Run', 'Docker'],
-    cover: '/images/ai-org-simulation.svg', coverWide: '/images/ai-org-simulation-wide.svg', accent: '#e5e8f0',
-    contributions: ['FastAPI 세션 API와 PDF 텍스트 추출 파이프라인 연결', 'Requirements·Shadow Roleplay Agent 실행 환경 구성', '프론트엔드·백엔드 Cloud Run 배포와 권한·로그 설정', '메모리 초과와 장시간 스트림 요청을 분석하고 실행 설정 조정'],
-    outcome: 'PDF 입력부터 보고서까지 이어지는 데모와 클라우드 실행 환경을 구성했습니다.',
+    summary: '데이터 조회·PDF·세션 API와 AI 실행 흐름을 연결하고, Cloud Run 배포와 메모리 문제 대응을 맡았습니다.',
+    role: '백엔드 · 인프라', availability: 'published',
+    tags: ['구조 설계', '검증·운영'], technologies: ['Python · FastAPI', 'PostgreSQL · SQLAlchemy', 'Alembic', 'Vertex AI', 'SSE', 'Cloud Run'],
+    cover: '/images/projects/ai-org-simulation/landing.png', coverWide: '/images/projects/ai-org-simulation/landing.png', accent: '#101013',
+    figmaPresentation: {title:'AI Org Simulation 발표 자료',href:'https://www.figma.com/design/XBCaez1b86vBYquhEl56gB/Google-Cloud-AI-Agent-Challenge?node-id=251-1896',embedSrc:'https://embed.figma.com/design/XBCaez1b86vBYquhEl56gB/Google-Cloud-AI-Agent-Challenge?embed-host=coldgeon-portfolio&theme=system',frameIds:['251-1896','251-1902','251-1905','251-1909','251-1934','251-1988','251-1940','251-1971','251-1992','251-2066','251-2026','251-2051','251-2058','251-2062','251-2073','251-2098']},
+    gallery: [
+      {src:'/images/projects/ai-org-simulation/landing.png',title:'랜딩 페이지',alt:'AI 기반 팀 추천과 가상 회의 시뮬레이션을 소개하는 AI Org Simulation 랜딩 화면',description:'PRD 기반 팀 구성과 가상 회의를 소개하고, 바로 시작·사례 보기로 진입합니다.'},
+      {src:'/images/projects/ai-org-simulation/prd-input.png',title:'PRD 입력',alt:'PRD 직접 입력·파일 업로드와 PM 페르소나 입력란이 있는 시뮬레이션 입력 화면',description:'제품 요구사항을 직접 입력하거나 PDF로 업로드해 분석을 시작합니다.'},
+      {src:'/images/projects/ai-org-simulation/pm-persona.png',title:'PM 페르소나·우선순위 설정',alt:'PM의 성향·제약 조건과 품질 우선 운영 방식을 설정한 화면',description:'PM의 성향·제약 조건과 속도·품질 등의 운영 우선순위를 지정합니다.'},
+      {src:'/images/projects/ai-org-simulation/team-selection.png',title:'추천 팀 조합 선택',alt:'역할 구성·적합도·역량 커버리지·리스크와 팀 선택 버튼을 표시한 추천 팀 화면',description:'추천 팀의 구성과 리스크를 확인하고 시뮬레이션할 팀을 선택합니다.'},
+      {src:'/images/projects/ai-org-simulation/roleplay.png',title:'역할별 에이전트 가상 회의',alt:'PM·개발 등 역할별 에이전트의 발언과 팀 적합도·리스크·진행률을 표시한 가상 회의 화면',description:'에이전트의 회의 발언과 단계별 진행 상태를 실시간으로 확인합니다.'},
+      {src:'/images/projects/ai-org-simulation/report.png',title:'시뮬레이션 리포트',alt:'팀 적합도·리스크·단계별 시뮬레이션 요약과 경고 사항을 모은 최종 리포트 화면',description:'팀 구성·시뮬레이션 요약·경고 사항을 종합한 결과입니다. 표시된 점수는 시연 데이터의 결과입니다.'},
+    ],
+    resources: [{title:'DB 모델·마이그레이션 구현',href:'https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/commit/8ec6acc',note:'본인 커밋 · SQLAlchemy 모델과 Alembic 초기 구성'},{title:'조회 API·Repository 구현',href:'https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/commit/5ca78e4',note:'본인 커밋 · 필터·페이지네이션·직원 활동 통합 조회'},{title:'CSV 검증·시드 구현',href:'https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/commit/aa1c752',note:'본인 커밋 · Pydantic 검증과 상사→직원 적재 순서'},{title:'Cloud Run·Vertex 실행 기록',href:'https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/blob/ea5f6764f0c40e7034e4524c1a8aaa6314ca702a/infra/gcp/vertex-demo-mode.md',note:'실제 모델·stub 모드와 단계별 smoke 확인 기록'}],
+    contributions: ['데이터: Pydantic 스키마·SQLAlchemy 모델·Alembic 마이그레이션, CSV 검증·시드와 조회 API 구현', 'API·흐름: PDF 텍스트 추출·세션 생성·팀 선택·결과 조회와 팀의 Agent 연결', 'AI 실행·배포: Vertex AI 인증·런타임·SSE, Docker·Artifact Registry·Cloud Run과 IAM·Secret 설정', '문제 대응: 512MiB 메모리 초과를 로그로 확인하고 실행 환경을 조정한 뒤 전체 흐름 재실행'],
+    outcome: 'PDF 입력부터 리포트까지 이어지는 팀 데모를 Cloud Run에 배포했습니다. 메모리 설정·시작 명령·동시 실행 수를 조정한 뒤 전체 흐름을 다시 완료했습니다.',
     flow: [{title:'PDF 기획서',detail:'텍스트 추출'},{title:'요구사항 분석',detail:'Vertex AI'},{title:'팀 매칭·시뮬레이션',detail:'역할별 협업'},{title:'리포트',detail:'결과 정리'}],
-    awardIds: [], evidence: [],
+    github: 'https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation', awardIds: [], evidence: [],
   },
 ];
 
@@ -186,7 +231,7 @@ export const experiences: Experience[] = [
     actions:['수작업 대조 과정을 분석하고 pandas·NumPy로 비교·입력 자동화','실제 업무 자료에 실행한 뒤 기업명이 맞게 입력됐는지 직접 확인'],
     outcome:'반복 명단 대조·입력을 프로그램 처리로 전환.',
     takeaway:'업무의 목적과 결과 확인 기준을 먼저 이해해야 했습니다.',
-    note:'원본 코드는 남아 있지 않아 당시 경험을 바탕으로 소개합니다. 시간 단축 수치는 기재하지 않았습니다.',projectSlug:'linc-automation'},
+    note:'원본 코드는 남아 있지 않아 당시 경험을 바탕으로 소개합니다. 수행 기간과 시간 단축 수치는 확인하지 못했습니다.',projectSlug:'linc-automation'},
 ];
 
 export const credentials: Credential[] = [
@@ -204,11 +249,29 @@ export const awards: Award[] = [
   {id:'umc-7-best-member',name:'UMC 7기 베스트 파트원상',grade:'베스트 파트원',issuer:'University MakeUs Challenge · UMC 7기',date:'2025.02.21',projectSlug:'replendar',evidence:{title:'UMC 7기 베스트 파트원 상장 보기',src:'/evidence/umc-7-best-member.jpg',kind:'image',alt:'University MakeUs Challenge UMC 7기 베스트 파트원상. 울산대학교 소속 박찬건의 Web 파트 활동을 인정한 상장으로, 활동 기간은 2024년 9월 16일부터 12월 27일까지이며 발급일은 2025년 2월 21일.'}},
 ];
 
-export const skillGroups: {name:string;icon:string;items:{name:string;icon:string;project?:string}[]}[] = [
-  {name:'Frontend',icon:'frontend',items:[{name:'React',icon:'react',project:'replendar'},{name:'TypeScript',icon:'typescript',project:'replendar'},{name:'Next.js',icon:'nextjs',project:'nextify'},{name:'Vite',icon:'vitejs',project:'alarm-u'},{name:'styled-components',icon:'styledcomponents'}]},
-  {name:'Backend & Data',icon:'database',items:[{name:'Java',icon:'java'},{name:'Spring Boot',icon:'spring',project:'alarm-u'},{name:'MySQL',icon:'mysql'},{name:'JPA',icon:'jpa'},{name:'Python',icon:'python',project:'linc-automation'},{name:'FastAPI',icon:'fastapi'},{name:'PostgreSQL',icon:'postgresql'}]},
-  {name:'Cloud & Deployment',icon:'cloud',items:[{name:'Docker',icon:'docker'},{name:'Cloud Run',icon:'cloudrun'},{name:'Nginx',icon:'nginx',project:'alarm-u'}]},
-  {name:'Collaboration & Quality',icon:'tools',items:[{name:'Git',icon:'git',project:'replendar'},{name:'GitHub',icon:'github',project:'replendar'},{name:'Notion',icon:'notion',project:'replendar'},{name:'Lighthouse',icon:'lighthouse',project:'nextify'}]},
+export type Skill = {name:string;icon?:string;symbol?:'database'|'sparkles'};
+export const skillGroups: {name:string;items:Skill[]}[] = [
+  {name:'Frontend',items:[
+    {name:'React',icon:'react'},{name:'TypeScript',icon:'typescript'},
+    {name:'Next.js',icon:'nextjs'},{name:'Vite',icon:'vitejs'},
+    {name:'styled-components',icon:'styledcomponents'},
+  ]},
+  {name:'Backend & Data',items:[
+    {name:'Java',icon:'java'},{name:'Spring Boot',icon:'spring'},
+    {name:'MySQL',icon:'mysql'},{name:'JPA',icon:'jpa'},
+    {name:'Python',icon:'python'},{name:'FastAPI',icon:'fastapi'},
+    {name:'PostgreSQL',icon:'postgresql'},{name:'SQL',symbol:'database'},
+  ]},
+  {name:'Cloud & Deployment',items:[
+    {name:'Kubernetes',icon:'kubernetes'},{name:'Terraform',icon:'terraform'},
+    {name:'AWS EKS',icon:'amazonwebservices'},{name:'GCP GKE',icon:'googlecloud'},
+    {name:'Docker',icon:'docker'},{name:'Cloud Run',icon:'cloudrun'},
+    {name:'Vertex AI',symbol:'sparkles'},{name:'Nginx',icon:'nginx'},
+  ]},
+  {name:'Collaboration & Quality',items:[
+    {name:'Git',icon:'git'},{name:'GitHub',icon:'github'},
+    {name:'Notion',icon:'notion'},{name:'Lighthouse',icon:'lighthouse'},
+  ]},
 ];
 
 export const navigation = [

@@ -1,25 +1,45 @@
-## 문제 해결
+## 데이터와 AI 실행을 연결한 방식
 
-<CaseStudy number="01" title="Cloud Run 메모리 초과 대응">
+- **FastAPI** · PDF 업로드·텍스트 추출, 세션 생성·결과 조회와 SSE 진행 전달을 연결했습니다.
+- **Vertex AI** · 팀의 Agent가 실제 모델 API를 호출할 인증·런타임을 구성했습니다. 모델 학습·파인튜닝은 수행하지 않았습니다.
+- **Cloud Run** · Docker 이미지를 Artifact Registry에 올려 프론트·백엔드를 배포했습니다. IAM은 호출 권한, Secret은 실행 설정 공급, Logging은 실패·지연 관찰에 사용했습니다.
+- **데이터 계층** · 직원·협업 활동의 Pydantic 스키마, SQLAlchemy 모델과 Alembic 마이그레이션을 구현했습니다. Repository를 두어 필터·페이지네이션과 직원별 활동 통합 조회를 API에서 분리했습니다.
+- **시연 범위** · 최종 추천은 더미 CSV를 읽습니다. DB 조회 계층 개발과 별개로 Cloud Run smoke는 Cloud SQL 없이 실행했고, 세션은 인메모리입니다. 외부 GitHub·Slack·Jira·Calendar 데이터의 실시간 수집과 리포트 DB 저장은 구현 완료 범위가 아닙니다.
 
-**문제** · 512MiB 제한 초과로 역할극 stream이 멈췄습니다.
+팀 발표 자료는 전체 서비스 설계를 설명합니다. 그중 프론트 주요 화면과 에이전트 내부 분석·추천·역할극·보고서 로직은 팀원 담당이고, 저는 데이터 계층·API·실행 연결과 배포를 맡았습니다.
 
-**조치** · 메모리 1GiB 조정, 실행 시 uv sync 제거와 동시 실행 수 축소를 적용했습니다.
+## 문제를 확인하고 대응한 기록
 
-**결과** · 실행 환경을 조정하고 전체 흐름 4회 이상 실행 기록을 확인했습니다.
+<CaseStudy number="01" title="Cloud Run 메모리 초과와 시작 경로 조정">
+
+**문제·확인** · Cloud Logging에서 512MiB 제한 초과로 역할극 stream이 중단된 기록을 확인했습니다.
+
+**판단·조치** · 실행 환경의 자원과 시작 비용을 먼저 조정했습니다. 메모리를 1GiB로 올리고 시작 시 uv sync를 제거했으며 동시 실행 수를 줄였습니다.
+
+**검증·결과** · 설정 변경 후 PDF 입력→요구사항 분석→팀 선택→가상 회의→리포트 전체 흐름을 다시 완료했습니다. 시연을 이어갈 수 있는 실행 환경을 마련했으며, 오류 제거율·속도 개선율이나 장기 안정성을 검증한 결과로 확대하지 않습니다.
+
+[메모리 조정](https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/commit/b9cdbe5) · [시작 명령 수정](https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/commit/79839a7) · [동시 실행 수 제한](https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/commit/77a8dab)
 
 </CaseStudy>
 
-<CaseStudy number="02" title="LLM 지연·세션 관리 한계 분석">
+<CaseStudy number="02" title="CSV 검증과 상사·직원 관계를 고려한 시드 적재">
 
-**관찰** · 요구사항 119–189초·역할극 99–136초 지연과 인메모리 세션의 확장 한계를 확인했습니다.
+**문제** · 더미 CSV를 DB에 적재할 때 스키마가 맞지 않거나 직원보다 상사 데이터가 늦게 들어오면 검증·외래키 오류가 생길 수 있었습니다.
 
-**대응** · 단계별 로그를 분석하고 비동기 작업·타임아웃·재시도·세션 영속화를 후속 과제로 정리했습니다.
+**판단·구현** · 각 행을 Pydantic으로 검증한 뒤 ORM 모델로 변환하고, 상사→직원 순서로 정렬해 적재하도록 만들었습니다. 상사 관계가 순환하거나 누락된 경우에는 명시적인 오류를 반환하도록 했습니다.
+
+**확인 범위** · 본인 시드 커밋에서 행 검증·계층 정렬·예외 처리를 확인할 수 있습니다. 팀원이 같은 더미 데이터로 개발할 수 있는 초기화 경로이며, 운영 데이터 이관이나 쿼리 성능 개선 사례와는 구분합니다.
+
+[CSV 검증·시드 구현 보기](https://github.com/Google-AI-Agent-Challenge-eeeee/ai-org-simulation/commit/aa1c752)
+
+</CaseStudy>
+
+<CaseStudy number="03" title="AI 요청 지연과 인메모리 세션의 한계 구분">
+
+**관찰** · 단계별 로그에서 요구사항 분석·역할극의 100초 이상 요청 사례와 SSE 진행 전달을 확인했습니다. 현재 세션은 인메모리에 있어 인스턴스 재시작·확장에 취약합니다.
+
+**후속 판단** · 세션 영속화, 비동기 작업, 타임아웃·재시도를 다음 과제로 정리했습니다. 이미 운영 시스템으로 구현했다고 표현하지 않습니다.
 
 </CaseStudy>
 
 <Outcome />
-
-## 배운 점
-
-AI 서비스에는 모델 호출과 함께 상태 관리·진행 전달·로그 관찰·운영 비용 관리가 필요합니다.

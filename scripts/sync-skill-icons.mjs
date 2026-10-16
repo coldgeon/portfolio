@@ -4,9 +4,9 @@ const headers={'User-Agent':'coldgeon-portfolio'};
 async function get(url){const r=await fetch(url,{headers});if(!r.ok)throw new Error(`${r.status}: ${url}`);return r.text();}
 const commit=JSON.parse(await get('https://api.github.com/repos/devicons/devicon/commits/master')).sha;
 const base=`https://raw.githubusercontent.com/devicons/devicon/${commit}`;
-const icons=['react','typescript','nextjs','vitejs','styledcomponents','java','spring','mysql','python','fastapi','postgresql','docker','cloudrun','nginx','git','github','notion'];
+const icons=['react','typescript','nextjs','vitejs','styledcomponents','java','spring','mysql','python','fastapi','postgresql','docker','cloudrun','nginx','git','github','notion','kubernetes','terraform','amazonwebservices','googlecloud'];
 const lighthouseCommit='7d21d0b9037b0e940931587ffe691087b1e15d70';
-const sources=[...icons.map(name=>({name,url:`${base}/icons/${name}/${name}-original.svg`})),{name:'lighthouse',url:`https://raw.githubusercontent.com/GoogleChrome/lighthouse/${lighthouseCommit}/assets/lighthouse-logo.svg`}];
+const sources=[...icons.map(name=>({name,url:`${base}/icons/${name}/${name}-${name==='amazonwebservices'?'original-wordmark':'original'}.svg`})),{name:'lighthouse',url:`https://raw.githubusercontent.com/GoogleChrome/lighthouse/${lighthouseCommit}/assets/lighthouse-logo.svg`}];
 const results=await Promise.allSettled(sources.map(async source=>{
  const svg=await get(source.url);
  if(!svg.includes('<svg')||/<script\b|\son\w+\s*=|javascript:/i.test(svg))throw new Error(`Unexpected SVG: ${source.name}`);
