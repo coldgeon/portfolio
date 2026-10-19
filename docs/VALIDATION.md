@@ -129,3 +129,10 @@ Lighthouse 13.4.1 / Headless Chrome 155 / 모바일 시뮬레이션 CPU 4배 / �
 - `pnpm build`(Webpack·TypeScript 포함), `pnpm lint`, 최종 빌드의 `pnpm test:e2e` 15개 모두 통과.
 - 390/768/1440px에서 새 문구·줄바꿈·가로 넘침 없음 확인. 캡처: `.local/hero-v1.3.1-local-*.png`.
 - GitHub `main`과 annotated `v1.3.1` 태그로 소스 버전을 고정하고 Vercel Production의 커밋·배포 성공 상태 및 공개 화면을 대조한다. Lighthouse 재측정은 포함하지 않는다.
+
+## 2026-10-19 v1.3.2 배포 전 검증
+
+- 마지막 연락처 섹션 제목을 사용자가 선택한 `Contact me`로 변경했다.
+- `pnpm build`(Webpack·TypeScript 포함), `pnpm lint`, `pnpm test:e2e` 15개 모두 통과.
+- 390/1440px에서 제목·연락처 표시 및 가로 넘침 없음 확인. 캡처: `.local/contact-v1.3.2-local-*.png`.
+- GitHub `main`과 annotated `v1.3.2` 태그로 소스를 고정하고 Vercel Production의 커밋·성공 상태 및 공개 화면을 대조한다. Lighthouse 재측정은 포함하지 않는다.
