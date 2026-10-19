@@ -45,9 +45,9 @@ pnpm audit:performance
 
 Playwright는 설치된 Chrome을 사용하며 3000번 포트에서 프로덕션 서버를 시작하거나 기존 서버를 재사용합니다. Lighthouse는 프로덕션 서버를 대상으로 측정합니다.
 
-배포 전 검증(2026-10-19, v1.3.2): 타입·린트·프로덕션 빌드와 Playwright 15개 테스트 통과. 마지막 모바일 Lighthouse 측정(2026-10-14)은 성능 82 / 접근성 100 / 권장사항 100 / SEO 100입니다. 이번 릴리스에서 성능을 재측정하지 않았으며 측정 조건·남은 비용은 [검증 기록](docs/VALIDATION.md)을 참고하세요.
+배포 전 검증(2026-10-19, v1.3.3): 타입·린트·프로덕션 빌드와 Playwright 15개 테스트 통과. 마지막 모바일 Lighthouse 측정(2026-10-14)은 성능 82 / 접근성 100 / 권장사항 100 / SEO 100입니다. 이번 릴리스에서 성능을 재측정하지 않았으며 측정 조건·남은 비용은 [검증 기록](docs/VALIDATION.md)을 참고하세요.
 
-릴리스는 `package.json` 버전과 같은 annotated Git 태그(`v1.3.2`)로 관리합니다. `main` 변경은 Vercel Git 연동으로 운영 배포하며, 태그는 배포한 소스 버전을 고정합니다. 운영 주소는 [coldgeon 포트폴리오](https://portfolio-alpha-mauve-5n0rjz2lpl.vercel.app)입니다.
+릴리스는 `package.json` 버전과 같은 annotated Git 태그(`v1.3.3`)로 관리합니다. `main` 변경은 Vercel Git 연동으로 운영 배포하며, 태그는 배포한 소스 버전을 고정합니다. 운영 주소는 [coldgeon 포트폴리오](https://portfolio-alpha-mauve-5n0rjz2lpl.vercel.app)입니다.
 
 `pnpm audit:performance`는 서버가 실행 중일 때 사용하며 결과를 `.local/lighthouse-mobile.html`과 JSON으로 저장합니다. Windows에서 임시 Chrome 프로필 삭제 시 생기는 오류를 피하도록 독립 프로필도 `.local` 아래에 유지합니다. Next.js 개발·빌드는 Windows MDX 처리의 호환성을 위해 Webpack을 사용합니다.
 
